@@ -17,7 +17,7 @@ public class CellularAutomata : MonoBehaviour
 
     public int width = 32;
     int height;
-    public int density = 45; // Land area = 45%
+    public int density = 40;
     public int iterations = 3;
     public GameObject oceanTile, landTile;
     public GameObject originalTiles, tiles;
@@ -65,7 +65,7 @@ public class CellularAutomata : MonoBehaviour
     {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (Random.Range(1, 100) > density) {
+                if (Random.Range(0, 100) < density) {
                     grid[i, j] = TileType.Ocean;
                 } else {
                     grid[i, j] = TileType.Land;
@@ -103,10 +103,12 @@ public class CellularAutomata : MonoBehaviour
                 oceanNeighbors++;
             }
         }
-        if (oceanNeighbors > 4) {
+        if (oceanNeighbors >= 5) {
             return TileType.Ocean;
-        } else {
+        } else if (oceanNeighbors <= 2) {
             return TileType.Land;
+        } else {
+            return grid[x, y];
         }
     }
 

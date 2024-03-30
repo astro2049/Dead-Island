@@ -368,8 +368,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1607745482}
-        m_TargetAssemblyTypeName: CellularAutomata, Assembly-CSharp
+      - m_Target: {fileID: 1607745484}
+        m_TargetAssemblyTypeName: BinarySpaceTrees, Assembly-CSharp
         m_MethodName: generate
         m_Mode: 1
         m_Arguments:
@@ -613,7 +613,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 250
+  orthographic size: 160
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -716,6 +716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1607745483}
   - component: {fileID: 1607745482}
+  - component: {fileID: 1607745484}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -730,14 +731,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607745481}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a71769051d432e54d84c7c59eb41d63f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   width: 32
-  density: 45
-  iterations: 3
+  density: 40
+  iterations: 2
   oceanTile: {fileID: 6138565656330546417, guid: 201b93ffd6e8da44d824aafaceb77944, type: 3}
   landTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
   originalTiles: {fileID: 1200777077}
@@ -757,6 +758,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1607745484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607745481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb3b1a6cce13bc4da57c1855195421e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 32
+  height: 32
+  minIslandWidth: 8
+  minIslandHeight: 8
+  islandPadding: 2
+  oceanTile: {fileID: 6138565656330546417, guid: 201b93ffd6e8da44d824aafaceb77944, type: 3}
+  landTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
+  tiles: {fileID: 1078289693}
 --- !u!1 &1723959539
 GameObject:
   m_ObjectHideFlags: 0
