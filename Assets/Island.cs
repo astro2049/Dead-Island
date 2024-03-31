@@ -13,27 +13,16 @@ public class Island
         this.padding = padding;
     }
 
-    public void generateLand(ref TileType[,] grid)
-    {
-        for (int i = xLeft + padding; i < xRight - padding; i++) {
-            for (int j = yLeft + padding; j < yRight - padding; j++) {
-                grid[i, j] = TileType.Land;
-            }
-        }
-    }
-
     public int getWidth() { return xRight - xLeft; }
     public int getHeight() { return yRight - yLeft; }
+    public int[] getCenter() { return new int[] { (xLeft + xRight) / 2, (yLeft + yRight) / 2 }; }
 
     // Getters and setters
     public int getXLeft() { return xLeft; }
-    public void setXLeft(int xLeft) { this.xLeft = xLeft; }
     public int getYLeft() { return yLeft; }
-    public void setYLeft(int yLeft) { this.yLeft = yLeft; }
     public int getXRight() { return xRight; }
-    public void setXRight(int xRight) { this.xRight = xRight; }
     public int getYRight() { return yRight; }
-    public void setYRight(int yRight) { this.yRight = yRight; }
+    public int getPadding() { return padding; }
     public ref Island getLeftIsland() { return ref leftIsland; }
     public void setLeftIsland(Island island) { leftIsland = island; }
     public ref Island getRightIsland() { return ref rightIsland; }

@@ -1,71 +1,61 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CellularAutomata : MonoBehaviour
+public class CellularAutomata
 {
-    enum TileType
-    {
-        Ocean = 0,
-        Land = 1
-    }
-
-    int[,] neighbors = {
-        { -1, -1 }, { -1, 0 }, { -1, 1 },
-        { 0, -1 }, { 0, 1 },
-        { 1, -1 }, { 1, 0 }, { 1, 1 }
+    readonly int[][] neighborOffsets = new int[][] {
+        new int[] { -1, -1 }, new int[] { -1, 0 }, new int[] { -1, 1 },
+        new int[] { 0, -1 }, new int[] { 0, 1 },
+        new int[] { 1, -1 }, new int[] { 1, 0 }, new int[] { 1, 1 }
     };
+    int initialLandDensity;
+    int iterations;
 
-    public int width = 32;
-    int height;
-    public int density = 40;
-    public int iterations = 3;
-    public GameObject oceanTile, landTile;
-    public GameObject originalTiles, tiles;
-
-    TileType[,] grid;
-    int tileSize;
-    int centerOffset;
-
-    void logGrid()
+    public CellularAutomata(int initialLandDensity, int iterations)
     {
-        for (int i = 0; i < width; i++) {
-            string row = "";
-            for (int j = 0; j < height; j++) {
-                row += (int)grid[i, j] + " ";
+        this.initialLandDensity = initialLandDensity;
+        this.iterations = iterations;
+    }
+
+    public Island generateSimpleIsland(ref Island island, ref TileType[,] grid)
+    {
+        int padding = island.getPadding();
+        for (int i = island.getXLeft() + padding; i < island.getXRight() - padding; i++) {
+            for (int j = island.getYLeft() + padding; j < island.getYRight() - padding; j++) {
+                grid[i, j] = TileType.Land;
             }
-            Debug.Log(row);
         }
+        return island;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public Island generateIsland(ref Island island, ref TileType[,] grid)
     {
-        // Initialize fields
-        height = width;
-        grid = new TileType[width, height];
-        tileSize = 10;
-        centerOffset = (tileSize * width - tileSize) / 2;
-        // Camera's half-size of the vertical viewing volume when in orthographic mode. https://docs.unity3d.com/ScriptReference/Camera-orthographicSize.html
-        Camera.main.orthographicSize = tileSize * width / 2;
+        initializeIsland(ref island, ref grid);
 
-        // Cellular Automata
-        generate();
+        int padding = island.getPadding();
+        int xTopLeft = island.getXLeft(), yTopLeft = island.getYLeft(), xDownRight = island.getXRight(), yDownRight = island.getYRight();
+        // Apply cellular automata
+        for (int round = 0; round < iterations; round++) {
+            var newGrid = grid;
+            for (int i = xTopLeft + padding; i < xDownRight - padding; i++) {
+                for (int j = yTopLeft + padding; j < yDownRight - padding; j++) {
+                    newGrid[i, j] = getNewState(i, j, ref grid);
+                }
+            }
+            grid = newGrid;
+        }
+        return island;
     }
 
-    public void generate()
+    /*
+    void initializeIsland()
     {
-        // Cellular Automata
-        makeNoiseGrid();
-        drawGrid(originalTiles);
-        applyCellularAutomation();
-        drawGrid(tiles);
-    }
-
-    void makeNoiseGrid()
-    {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (Random.Range(0, 100) < density) {
+        int padding = island.getPadding();
+        int xTopLeft = island.getXLeft(), yTopLeft = island.getYLeft(), xDownRight = island.getXRight(), yDownRight = island.getYRight();
+        for (int i = xTopLeft + padding; i < xDownRight - padding; i++) {
+            for (int j = yTopLeft + padding; j < yDownRight - padding; j++) {
+                if (Random.Range(0, 100) < initialLandDensity) {
                     grid[i, j] = TileType.Ocean;
                 } else {
                     grid[i, j] = TileType.Land;
@@ -73,36 +63,18 @@ public class CellularAutomata : MonoBehaviour
             }
         }
     }
+    */
 
-    void applyCellularAutomation()
+    void initializeIsland(ref Island island, ref TileType[,] grid)
     {
-        for (int round = 0; round < iterations; round++) {
-            var newGrid = grid;
-            for (int i = 0; i < width; i++) {
-                for (int j = 0; j < height; j++) {
-                    newGrid[i, j] = getNewState(i, j);
-                }
-            }
-            grid = newGrid;
-        }
+        int[] islandCenter = island.getCenter();
+        grid[islandCenter[0], islandCenter[1]] = TileType.Land;
     }
 
-    TileType getNewState(int x, int y)
+    TileType getNewState(int x, int y, ref TileType[,] grid)
     {
-        int oceanNeighbors = 0;
-        for (int k = 0; k < neighbors.GetLength(0); k++) {
-            int xx = x + neighbors[k, 0], yy = y + neighbors[k, 1];
-            TileType neighborType;
-            if (xx < 0 || xx >= width || yy < 0 || yy >= height) {
-                neighborType = TileType.Ocean;
-            } else {
-                neighborType = grid[xx, yy];
-            }
-
-            if (neighborType == TileType.Ocean) {
-                oceanNeighbors++;
-            }
-        }
+        var neighbors = getMooreNeighbors(x, y, ref grid);
+        int oceanNeighbors = neighbors[TileType.Ocean];
         if (oceanNeighbors >= 5) {
             return TileType.Ocean;
         } else if (oceanNeighbors <= 2) {
@@ -112,17 +84,19 @@ public class CellularAutomata : MonoBehaviour
         }
     }
 
-    void drawGrid(GameObject tileCollection)
+    Dictionary<TileType, int> getMooreNeighbors(int x, int y, ref TileType[,] grid)
     {
-        foreach (Transform childTransform in tileCollection.transform) {
-            Destroy(childTransform.gameObject);
-        }
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                var tile = Instantiate(grid[i, j] == TileType.Ocean ? oceanTile : landTile, tileCollection.transform);
-                tile.transform.localPosition =
-                    new Vector3(j * tileSize - centerOffset, 0, -i * tileSize + centerOffset);
+        var mooreNeighbors = new Dictionary<TileType, int> {
+            { TileType.Ocean, 0 },
+            { TileType.Land, 0 }
+        };
+        for (int k = 0; k < neighborOffsets.GetLength(0); k++) {
+            int xx = x + neighborOffsets[k][0], yy = y + neighborOffsets[k][1];
+            if (xx < 0 || xx >= grid.GetLength(0) || yy < 0 || yy >= grid.GetLength(1)) {
+                mooreNeighbors[TileType.Ocean]++;
             }
+            mooreNeighbors[grid[xx, yy]]++;
         }
+        return mooreNeighbors;
     }
 }

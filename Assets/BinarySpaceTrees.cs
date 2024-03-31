@@ -14,22 +14,30 @@ public class BinarySpaceTrees : MonoBehaviour
 
     public int width, height;
     public int minIslandWidth, minIslandHeight;
-    public int islandPadding = 2;
+    public int islandPadding;
     public GameObject oceanTile, landTile;
     public GameObject tiles;
 
     int tileSize;
     int widthCenterOffset, heightCenterOffset;
     Island initialIsland;
+    CellularAutomata ca;
 
     void Start()
     {
+        // Initializations
         tileSize = 10;
         widthCenterOffset = (tileSize * width - tileSize) / 2;
         heightCenterOffset = (tileSize * height - tileSize) / 2;
-        initializeGrid();
+        grid = new TileType[width, height];
+        Camera.main.orthographicSize = tileSize * height / 2; // Camera's half-size of the vertical viewing volume when in orthographic mode. https://docs.unity3d.com/ScriptReference/Camera-orthographicSize.html
+        ca = new CellularAutomata(45, 3);
+
+        // Apply binary space partitioning
         initialIsland = new Island(0, 0, width, height, islandPadding);
         generate();
+
+        // Draw the tile grid
         drawGrid(tiles);
     }
 
@@ -39,38 +47,44 @@ public class BinarySpaceTrees : MonoBehaviour
     {
         if (island.getWidth() <= minIslandWidth && island.getHeight() <= minIslandHeight) {
             island.setIsLeaf();
-            island.generateLand(ref grid);
+            island = ca.generateSimpleIsland(ref island, ref grid);
             return;
         }
-        int xTopLeft = island.getXLeft(),
-            yTopLeft = island.getYLeft(),
-            xDownRight = island.getXRight(),
-            yDownRight = island.getYRight();
-        int xMid = (xTopLeft + xDownRight) / 2, yMid = (yTopLeft + yDownRight) / 2;
+
         if (island.getWidth() > minIslandHeight && island.getHeight() > minIslandHeight) {
             if (Random.Range(0, 100) < 50) {
                 // X - horizontal split
-                island.setLeftIsland(new Island(xTopLeft, yTopLeft, xMid, yDownRight, islandPadding));
-                island.setRightIsland(new Island(xMid, yTopLeft, xDownRight, yDownRight, islandPadding));
+                splitHorizontally(ref island);
             } else {
                 // Y - vertical split
-                island.setLeftIsland(new Island(xTopLeft, yTopLeft, xDownRight, yMid, islandPadding));
-                island.setRightIsland(new Island(xTopLeft, yMid, xDownRight, yDownRight, islandPadding));
+                splitVertically(ref island);
             }
         } else if (island.getWidth() > minIslandHeight) {
             // X - horizontal split
-            island.setLeftIsland(new Island(xTopLeft, yTopLeft, xMid, yDownRight, islandPadding));
-            island.setRightIsland(new Island(xMid, yTopLeft, xDownRight, yDownRight, islandPadding));
+            splitHorizontally(ref island);
         } else {
             // Y - vertical split
-            island.setLeftIsland(new Island(xTopLeft, yTopLeft, xDownRight, yMid, islandPadding));
-            island.setRightIsland(new Island(xTopLeft, yMid, xDownRight, yDownRight, islandPadding));
+            splitVertically(ref island);
         }
         partition(ref island.getLeftIsland());
         partition(ref island.getRightIsland());
     }
 
-    void initializeGrid() { grid = new TileType[width, height]; }
+    void splitHorizontally(ref Island island)
+    {
+        int xTopLeft = island.getXLeft(), yTopLeft = island.getYLeft(), xDownRight = island.getXRight(), yDownRight = island.getYRight();
+        int xMid = (xTopLeft + xDownRight) / 2;
+        island.setLeftIsland(new Island(xTopLeft, yTopLeft, xMid, yDownRight, islandPadding));
+        island.setRightIsland(new Island(xMid, yTopLeft, xDownRight, yDownRight, islandPadding));
+    }
+
+    void splitVertically(ref Island island)
+    {
+        int xTopLeft = island.getXLeft(), yTopLeft = island.getYLeft(), xDownRight = island.getXRight(), yDownRight = island.getYRight();
+        int yMid = (yTopLeft + yDownRight) / 2;
+        island.setLeftIsland(new Island(xTopLeft, yTopLeft, xDownRight, yMid, islandPadding));
+        island.setRightIsland(new Island(xTopLeft, yMid, xDownRight, yDownRight, islandPadding));
+    }
 
     void drawGrid(GameObject tileCollection)
     {

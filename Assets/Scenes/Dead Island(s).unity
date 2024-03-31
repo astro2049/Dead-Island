@@ -715,7 +715,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1607745483}
-  - component: {fileID: 1607745482}
   - component: {fileID: 1607745484}
   m_Layer: 0
   m_Name: MapGenerator
@@ -724,25 +723,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1607745482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607745481}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a71769051d432e54d84c7c59eb41d63f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 32
-  density: 40
-  iterations: 2
-  oceanTile: {fileID: 6138565656330546417, guid: 201b93ffd6e8da44d824aafaceb77944, type: 3}
-  landTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
-  originalTiles: {fileID: 1200777077}
-  tiles: {fileID: 1078289693}
 --- !u!4 &1607745483
 Transform:
   m_ObjectHideFlags: 0
