@@ -41,7 +41,11 @@ public class BinarySpaceTrees : MonoBehaviour
         drawGrid(tiles);
     }
 
-    public void generate() { partition(ref initialIsland); }
+    public void generate()
+    {
+        partition(ref initialIsland);
+        connectIslands(ref initialIsland);
+    }
 
     void partition(ref Island island)
     {
@@ -84,6 +88,27 @@ public class BinarySpaceTrees : MonoBehaviour
         int yMid = (yTopLeft + yDownRight) / 2;
         island.setLeftIsland(new Island(xTopLeft, yTopLeft, xDownRight, yMid, islandPadding));
         island.setRightIsland(new Island(xTopLeft, yMid, xDownRight, yDownRight, islandPadding));
+    }
+
+    void connectIslands(ref Island island)
+    {
+        if (island.getIsLeaf()) {
+            return;
+        }
+        int[] center1 = island.getLeftIsland().getCenter();
+        int[] center2 = island.getRightIsland().getCenter();
+        int x1 = center1[0], y1 = center1[1], x2 = center2[0], y2 = center2[1];
+        if (x1 == x2) {
+            for (int j = y1 + 1; j < y2; j++) {
+                grid[x1, j] = TileType.Land;
+            }
+        } else {
+            for (int i = x1 + 1; i < x2; i++) {
+                grid[i, y1] = TileType.Land;
+            }
+        }
+        connectIslands(ref island.getLeftIsland());
+        connectIslands(ref island.getRightIsland());
     }
 
     void drawGrid(GameObject tileCollection)
