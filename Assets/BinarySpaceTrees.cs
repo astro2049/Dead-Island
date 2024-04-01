@@ -56,6 +56,7 @@ public class BinarySpaceTrees : MonoBehaviour
         if (island.getWidth() <= maxIslandWidth && island.getHeight() <= maxIslandHeight) {
             island.setIsLeaf();
             island = ca.generateIsland(ref island, ref grid);
+            generateCoastlines(ref island);
             return;
         }
 
@@ -106,15 +107,45 @@ public class BinarySpaceTrees : MonoBehaviour
         int x1 = center1[0], y1 = center1[1], x2 = center2[0], y2 = center2[1];
         if (x1 == x2) {
             for (int j = y1 + 1; j < y2; j++) {
+                if (grid[x1, j] != TileType.Ocean) {
+                    continue;
+                }
                 grid[x1, j] = TileType.Beach;
             }
         } else {
             for (int i = x1 + 1; i < x2; i++) {
+                if (grid[i, y1] != TileType.Ocean) {
+                    continue;
+                }
                 grid[i, y1] = TileType.Beach;
             }
         }
         connectIslands(ref island.getLeftIsland());
         connectIslands(ref island.getRightIsland());
+    }
+
+    void generateCoastlines(ref Island island)
+    {
+        int padding = island.getPadding();
+        int xTopLeft = island.getXLeft(), yTopLeft = island.getYLeft(), xDownRight = island.getXRight(), yDownRight = island.getYRight();
+        for (int i = xTopLeft + padding; i < xDownRight - padding; i++) {
+            for (int j = yTopLeft + padding; j < yDownRight - padding; j++) {
+                if (grid[i, j] != TileType.Forest) {
+                    continue;
+                }
+                var neighbors = Utils.getMooreNeighbors(i, j, ref grid);
+                if (neighbors[TileType.Ocean].Count != 0) {
+                    // if on coastline
+                    grid[i, j] = TileType.Beach;
+                    foreach (int[] coordinate in neighbors[TileType.Forest]) {
+                        if (Random.Range(0, 100) > 25) {
+                            continue;
+                        }
+                        grid[coordinate[0], coordinate[1]] = TileType.Beach;
+                    }
+                }
+            }
+        }
     }
 
     void drawGrid(GameObject tileCollection)
