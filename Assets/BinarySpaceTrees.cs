@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum TileType
 {
@@ -13,7 +14,8 @@ public class BinarySpaceTrees : MonoBehaviour
     TileType[,] grid;
 
     public int width, height;
-    public int minIslandWidth, minIslandHeight;
+    public int maxIslandWidth, maxIslandHeight;
+    public int wiggle;
     public int islandPadding;
     public GameObject oceanTile, landTile;
     public GameObject tiles;
@@ -29,33 +31,33 @@ public class BinarySpaceTrees : MonoBehaviour
         tileSize = 10;
         widthCenterOffset = (tileSize * width - tileSize) / 2;
         heightCenterOffset = (tileSize * height - tileSize) / 2;
-        grid = new TileType[width, height];
         Camera.main.orthographicSize = tileSize * height / 2; // Camera's half-size of the vertical viewing volume when in orthographic mode. https://docs.unity3d.com/ScriptReference/Camera-orthographicSize.html
         ca = new CellularAutomata(45, 3);
 
         // Apply binary space partitioning
-        initialIsland = new Island(0, 0, width, height, islandPadding);
         generate();
+    }
+
+    public void generate()
+    {
+        grid = new TileType[width, height];
+        initialIsland = new Island(0, 0, width, height, islandPadding);
+        partition(ref initialIsland);
+        connectIslands(ref initialIsland);
 
         // Draw the tile grid
         drawGrid(tiles);
     }
 
-    public void generate()
-    {
-        partition(ref initialIsland);
-        connectIslands(ref initialIsland);
-    }
-
     void partition(ref Island island)
     {
-        if (island.getWidth() <= minIslandWidth && island.getHeight() <= minIslandHeight) {
+        if (island.getWidth() <= maxIslandWidth && island.getHeight() <= maxIslandHeight) {
             island.setIsLeaf();
             island = ca.generateSimpleIsland(ref island, ref grid);
             return;
         }
 
-        if (island.getWidth() > minIslandHeight && island.getHeight() > minIslandHeight) {
+        if (island.getWidth() > maxIslandHeight && island.getHeight() > maxIslandHeight) {
             if (Random.Range(0, 100) < 50) {
                 // X - horizontal split
                 splitHorizontally(ref island);
@@ -63,7 +65,7 @@ public class BinarySpaceTrees : MonoBehaviour
                 // Y - vertical split
                 splitVertically(ref island);
             }
-        } else if (island.getWidth() > minIslandHeight) {
+        } else if (island.getWidth() > maxIslandHeight) {
             // X - horizontal split
             splitHorizontally(ref island);
         } else {
@@ -78,6 +80,7 @@ public class BinarySpaceTrees : MonoBehaviour
     {
         int xTopLeft = island.getXLeft(), yTopLeft = island.getYLeft(), xDownRight = island.getXRight(), yDownRight = island.getYRight();
         int xMid = (xTopLeft + xDownRight) / 2;
+        xMid = Random.Range(xMid - wiggle, xMid + wiggle);
         island.setLeftIsland(new Island(xTopLeft, yTopLeft, xMid, yDownRight, islandPadding));
         island.setRightIsland(new Island(xMid, yTopLeft, xDownRight, yDownRight, islandPadding));
     }
@@ -86,6 +89,7 @@ public class BinarySpaceTrees : MonoBehaviour
     {
         int xTopLeft = island.getXLeft(), yTopLeft = island.getYLeft(), xDownRight = island.getXRight(), yDownRight = island.getYRight();
         int yMid = (yTopLeft + yDownRight) / 2;
+        yMid = Random.Range(yMid - wiggle, yMid + wiggle);
         island.setLeftIsland(new Island(xTopLeft, yTopLeft, xDownRight, yMid, islandPadding));
         island.setRightIsland(new Island(xTopLeft, yMid, xDownRight, yDownRight, islandPadding));
     }

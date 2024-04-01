@@ -750,10 +750,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb3b1a6cce13bc4da57c1855195421e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 32
-  height: 32
-  minIslandWidth: 8
-  minIslandHeight: 8
+  width: 64
+  height: 64
+  maxIslandWidth: 32
+  maxIslandHeight: 32
+  wiggle: 8
   islandPadding: 2
   oceanTile: {fileID: 6138565656330546417, guid: 201b93ffd6e8da44d824aafaceb77944, type: 3}
   landTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
