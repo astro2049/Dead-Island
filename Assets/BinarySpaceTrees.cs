@@ -60,7 +60,7 @@ public class BinarySpaceTrees : MonoBehaviour
         }
 
         if (island.getWidth() > maxIslandHeight && island.getHeight() > maxIslandHeight) {
-            if (Random.Range(0, 100) > 50) {
+            if (Random.Range(0, 100) < 50) {
                 // X - horizontal split
                 splitHorizontally(ref island);
             } else {
@@ -128,16 +128,17 @@ public class BinarySpaceTrees : MonoBehaviour
                 switch (grid[i, j]) {
                     case TileType.Beach:
                         tile = Instantiate(beachTile, tileCollection.transform);
+                        tile.transform.localPosition =
+                            new Vector3(j * tileSize - widthCenterOffset, 0, -i * tileSize + heightCenterOffset);
                         break;
                     case TileType.Forest:
                         tile = Instantiate(forestTile, tileCollection.transform);
+                        tile.transform.localPosition =
+                            new Vector3(j * tileSize - widthCenterOffset, 0, -i * tileSize + heightCenterOffset);
                         break;
                     default:
-                        tile = Instantiate(oceanTile, tileCollection.transform);
                         break;
                 }
-                tile.transform.localPosition =
-                    new Vector3(j * tileSize - widthCenterOffset, 0, -i * tileSize + heightCenterOffset);
             }
         }
     }
