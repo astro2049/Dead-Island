@@ -4,11 +4,6 @@ using Random = UnityEngine.Random;
 
 public class CellularAutomata
 {
-    readonly int[][] neighborOffsets = new int[][] {
-        new int[] { -1, -1 }, new int[] { -1, 0 }, new int[] { -1, 1 },
-        new int[] { 0, -1 }, new int[] { 0, 1 },
-        new int[] { 1, -1 }, new int[] { 1, 0 }, new int[] { 1, 1 }
-    };
     int initialLandDensity;
     int iterations;
 
@@ -67,20 +62,32 @@ public class CellularAutomata
 
     void initializeIsland(ref Island island, ref TileType[,] grid)
     {
+        // Island minimum width = 3 + 2 * padding
         int[] islandCenter = island.getCenter();
-        grid[islandCenter[0], islandCenter[1]] = TileType.Land;
+        int x = islandCenter[0], y = islandCenter[1];
+        for (int i = -1; i <= 1; i++) {
+            int xx = x + i;
+            for (int j = -1; j <= 1; j++) {
+                int yy = y + j;
+                if (xx < 0 || xx >= grid.GetLength(0) || yy < 0 || yy >= grid.GetLength(1)) {
+                    continue;
+                }
+                grid[xx, yy] = TileType.Land;
+            }
+        }
     }
 
     TileType getNewState(int x, int y, ref TileType[,] grid)
     {
-        var neighbors = getMooreNeighbors(x, y, ref grid);
-        int oceanNeighbors = neighbors[TileType.Ocean];
-        if (oceanNeighbors >= 5) {
-            return TileType.Ocean;
-        } else if (oceanNeighbors <= 2) {
-            return TileType.Land;
-        } else {
+        if (grid[x, y] != TileType.Ocean) {
             return grid[x, y];
+        }
+        var neighbors = getMooreNeighbors(x, y, ref grid);
+        int landNeighbors = neighbors[TileType.Land];
+        if (landNeighbors >= 3) {
+            return Random.Range(0, 100) < 50 ? TileType.Land : TileType.Ocean;
+        } else {
+            return TileType.Ocean;
         }
     }
 
@@ -90,12 +97,15 @@ public class CellularAutomata
             { TileType.Ocean, 0 },
             { TileType.Land, 0 }
         };
-        for (int k = 0; k < neighborOffsets.GetLength(0); k++) {
-            int xx = x + neighborOffsets[k][0], yy = y + neighborOffsets[k][1];
-            if (xx < 0 || xx >= grid.GetLength(0) || yy < 0 || yy >= grid.GetLength(1)) {
-                mooreNeighbors[TileType.Ocean]++;
+        for (int i = -1; i <= 1; i++) {
+            int xx = x + i;
+            for (int j = -1; j <= 1; j++) {
+                int yy = y + j;
+                if (xx < 0 || xx >= grid.GetLength(0) || yy < 0 || yy >= grid.GetLength(1)) {
+                    mooreNeighbors[TileType.Ocean]++;
+                }
+                mooreNeighbors[grid[xx, yy]]++;
             }
-            mooreNeighbors[grid[xx, yy]]++;
         }
         return mooreNeighbors;
     }

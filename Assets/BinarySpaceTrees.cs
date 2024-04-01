@@ -19,6 +19,7 @@ public class BinarySpaceTrees : MonoBehaviour
     public int islandPadding;
     public GameObject oceanTile, landTile;
     public GameObject tiles;
+    public int iterations;
 
     int tileSize;
     int widthCenterOffset, heightCenterOffset;
@@ -32,7 +33,7 @@ public class BinarySpaceTrees : MonoBehaviour
         widthCenterOffset = (tileSize * width - tileSize) / 2;
         heightCenterOffset = (tileSize * height - tileSize) / 2;
         Camera.main.orthographicSize = tileSize * height / 2; // Camera's half-size of the vertical viewing volume when in orthographic mode. https://docs.unity3d.com/ScriptReference/Camera-orthographicSize.html
-        ca = new CellularAutomata(45, 3);
+        ca = new CellularAutomata(45, iterations);
 
         // Apply binary space partitioning
         generate();
@@ -53,7 +54,7 @@ public class BinarySpaceTrees : MonoBehaviour
     {
         if (island.getWidth() <= maxIslandWidth && island.getHeight() <= maxIslandHeight) {
             island.setIsLeaf();
-            island = ca.generateSimpleIsland(ref island, ref grid);
+            island = ca.generateIsland(ref island, ref grid);
             return;
         }
 
