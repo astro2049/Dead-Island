@@ -6,7 +6,8 @@ using UnityEngine.Serialization;
 public enum TileType
 {
     Ocean = 0,
-    Land = 1
+    Beach = 1,
+    Forest = 2
 }
 
 public class BinarySpaceTrees : MonoBehaviour
@@ -17,7 +18,7 @@ public class BinarySpaceTrees : MonoBehaviour
     public int maxIslandWidth, maxIslandHeight;
     public int wiggle;
     public int islandPadding;
-    public GameObject oceanTile, landTile;
+    public GameObject oceanTile, beachTile, forestTile;
     public GameObject tiles;
     public int iterations;
 
@@ -59,7 +60,7 @@ public class BinarySpaceTrees : MonoBehaviour
         }
 
         if (island.getWidth() > maxIslandHeight && island.getHeight() > maxIslandHeight) {
-            if (Random.Range(0, 100) < 50) {
+            if (Random.Range(0, 100) > 50) {
                 // X - horizontal split
                 splitHorizontally(ref island);
             } else {
@@ -105,11 +106,11 @@ public class BinarySpaceTrees : MonoBehaviour
         int x1 = center1[0], y1 = center1[1], x2 = center2[0], y2 = center2[1];
         if (x1 == x2) {
             for (int j = y1 + 1; j < y2; j++) {
-                grid[x1, j] = TileType.Land;
+                grid[x1, j] = TileType.Beach;
             }
         } else {
             for (int i = x1 + 1; i < x2; i++) {
-                grid[i, y1] = TileType.Land;
+                grid[i, y1] = TileType.Beach;
             }
         }
         connectIslands(ref island.getLeftIsland());
@@ -123,7 +124,18 @@ public class BinarySpaceTrees : MonoBehaviour
         }
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                var tile = Instantiate(grid[i, j] == TileType.Ocean ? oceanTile : landTile, tileCollection.transform);
+                GameObject tile;
+                switch (grid[i, j]) {
+                    case TileType.Beach:
+                        tile = Instantiate(beachTile, tileCollection.transform);
+                        break;
+                    case TileType.Forest:
+                        tile = Instantiate(forestTile, tileCollection.transform);
+                        break;
+                    default:
+                        tile = Instantiate(oceanTile, tileCollection.transform);
+                        break;
+                }
                 tile.transform.localPosition =
                     new Vector3(j * tileSize - widthCenterOffset, 0, -i * tileSize + heightCenterOffset);
             }

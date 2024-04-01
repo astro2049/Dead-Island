@@ -757,7 +757,8 @@ MonoBehaviour:
   wiggle: 8
   islandPadding: 2
   oceanTile: {fileID: 6138565656330546417, guid: 201b93ffd6e8da44d824aafaceb77944, type: 3}
-  landTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
+  beachTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
+  forestTile: {fileID: 7130005556168028831, guid: 746870aee884b1c42937933256a3fa4d, type: 3}
   tiles: {fileID: 1078289693}
   iterations: 20
 --- !u!1 &1723959539
