@@ -30,7 +30,7 @@ public class BinarySpaceTrees : MonoBehaviour
     void Start()
     {
         // Initializations
-        tileSize = 10;
+        tileSize = 1;
         widthCenterOffset = (tileSize * width - tileSize) / 2;
         heightCenterOffset = (tileSize * height - tileSize) / 2;
         Camera.main.orthographicSize = tileSize * height / 2; // Camera's half-size of the vertical viewing volume when in orthographic mode. https://docs.unity3d.com/ScriptReference/Camera-orthographicSize.html
