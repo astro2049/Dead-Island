@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Utils
+public static class Utils
 {
     public static Dictionary<TileType, List<int[]>> getMooreNeighbors(int x, int y, ref TileType[,] grid)
     {

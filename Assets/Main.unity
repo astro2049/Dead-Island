@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 274571359}
   - component: {fileID: 274571358}
   - component: {fileID: 274571357}
-  - component: {fileID: 274571356}
   m_Layer: 0
   m_Name: Ocean (1)
   m_TagString: Untagged
@@ -142,28 +141,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &274571356
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274571355}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &274571357
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -580,7 +557,6 @@ GameObject:
   - component: {fileID: 696489902}
   - component: {fileID: 696489901}
   - component: {fileID: 696489900}
-  - component: {fileID: 696489899}
   m_Layer: 0
   m_Name: Ocean (0)
   m_TagString: Untagged
@@ -588,28 +564,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &696489899
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696489898}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &696489900
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1075,6 +1029,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1607745483}
   - component: {fileID: 1607745484}
+  - component: {fileID: 1607745485}
   m_Layer: 0
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -1120,6 +1075,37 @@ MonoBehaviour:
   forestTile: {fileID: 7130005556168028831, guid: 746870aee884b1c42937933256a3fa4d, type: 3}
   tiles: {fileID: 1078289693}
   iterations: 20
+--- !u!114 &1607745485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607745481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1 &1723959539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1232,7 +1218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1775230139}
   m_Layer: 0
-  m_Name: Demonstration
+  m_Name: Legends
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1307,7 +1293,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8810254330231085698, guid: d2d7a95a0b9647b44b6bebddb15522b3, type: 3}
+    - {fileID: 8894038844993168104, guid: d2d7a95a0b9647b44b6bebddb15522b3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7872496006695232811, guid: d2d7a95a0b9647b44b6bebddb15522b3, type: 3}

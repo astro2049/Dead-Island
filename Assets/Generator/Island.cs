@@ -6,33 +6,33 @@ public class Island
 {
     public Island(int xLeft, int yLeft, int xRight, int yRight, int padding)
     {
-        this.xLeft = xLeft;
-        this.yLeft = yLeft;
-        this.xRight = xRight;
-        this.yRight = yRight;
+        topLeft = new Vector2Int(xLeft, yLeft);
+        downRight = new Vector2Int(xRight, yRight);
         this.padding = padding;
     }
 
-    public int getWidth() { return xRight - xLeft; }
-    public int getHeight() { return yRight - yLeft; }
-    public int[] getCenter() { return new int[] { (xLeft + xRight) / 2, (yLeft + yRight) / 2 }; }
+    public int getWidth() { return downRight.x - topLeft.x; }
+    public int getHeight() { return downRight.y - topLeft.y; }
+    public Vector2Int getCenter() { return new Vector2Int((topLeft.x + downRight.x) / 2, (topLeft.y + downRight.y) / 2); }
 
     // Getters and setters
-    public int getXLeft() { return xLeft; }
-    public int getYLeft() { return yLeft; }
-    public int getXRight() { return xRight; }
-    public int getYRight() { return yRight; }
+    public ref Vector2Int getTopLeft() { return ref topLeft; }
+    public ref Vector2Int getDownRight() { return ref downRight; }
     public int getPadding() { return padding; }
     public ref Island getLeftIsland() { return ref leftIsland; }
     public void setLeftIsland(Island island) { leftIsland = island; }
     public ref Island getRightIsland() { return ref rightIsland; }
     public void setRightIsland(Island island) { rightIsland = island; }
     public bool getIsLeaf() { return isLeaf; }
-    public void setIsLeaf() { isLeaf = true; }
+
+    public void setIsLeaf(ref TileType[,] grid)
+    {
+        isLeaf = true;
+    }
 
     // private:
-    int xLeft, yLeft, xRight, yRight;
-    int padding;
+    Vector2Int topLeft, downRight;
+    readonly int padding;
     Island leftIsland, rightIsland;
     bool isLeaf = false;
 }
