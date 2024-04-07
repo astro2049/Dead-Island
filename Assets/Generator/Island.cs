@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Island
 {
+    private Vector2Int topLeft, downRight;
+    private readonly int padding;
+    private Island leftIsland, rightIsland;
+    private bool isLeaf = false;
+
     public Island(int xLeft, int yLeft, int xRight, int yRight, int padding)
     {
         topLeft = new Vector2Int(xLeft, yLeft);
@@ -25,14 +30,8 @@ public class Island
     public void setRightIsland(Island island) { rightIsland = island; }
     public bool getIsLeaf() { return isLeaf; }
 
-    public void setIsLeaf(ref TileType[,] grid)
+    public void setIsLeaf()
     {
         isLeaf = true;
     }
-
-    // private:
-    Vector2Int topLeft, downRight;
-    readonly int padding;
-    Island leftIsland, rightIsland;
-    bool isLeaf = false;
 }

@@ -27,6 +27,7 @@ public class BinarySpaceTrees : MonoBehaviour
     private Island initialIsland;
 
     private List<Island> leafIslands = new List<Island>();
+    private NavMeshSurface navMeshSurface;
 
     private void Start()
     {
@@ -36,12 +37,10 @@ public class BinarySpaceTrees : MonoBehaviour
         Camera.main.orthographicSize = tileSize * height / 2; // Camera's half-size of the vertical viewing volume when in orthographic mode. https://docs.unity3d.com/ScriptReference/Camera-orthographicSize.html
         CellularAutomata.iterations = iterations;
 
+        navMeshSurface = GetComponent<NavMeshSurface>();
+
         // Apply binary space partitioning
         generate();
-
-        // Build nav mesh
-        NavMeshSurface navMeshSurface = GetComponent<NavMeshSurface>();
-        navMeshSurface.BuildNavMesh();
     }
 
     public void generate()
@@ -53,12 +52,15 @@ public class BinarySpaceTrees : MonoBehaviour
 
         // Draw the tile grid
         drawGrid(tiles);
+
+        // Build nav mesh
+        navMeshSurface.BuildNavMesh();
     }
 
     private void partition(ref Island island)
     {
         if (island.getWidth() <= maxIslandWidth && island.getHeight() <= maxIslandHeight) {
-            island.setIsLeaf(ref grid);
+            island.setIsLeaf();
             leafIslands.Add(island);
             CellularAutomata.generateIsland(ref island, ref grid); // writes grid
             PostProcessor.generateCoastlines(ref island, ref grid);

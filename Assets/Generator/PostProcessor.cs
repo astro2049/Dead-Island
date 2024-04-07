@@ -9,8 +9,8 @@ public static class PostProcessor
         if (island.getIsLeaf()) {
             return;
         }
-        var center1 = island.getLeftIsland().getCenter();
-        var center2 = island.getRightIsland().getCenter();
+        Vector2Int center1 = island.getLeftIsland().getCenter();
+        Vector2Int center2 = island.getRightIsland().getCenter();
         int x1 = center1.x, y1 = center1.y, x2 = center2.x, y2 = center2.y;
         if (x1 == x2) {
             for (int j = y1 + 1; j < y2; j++) {
@@ -40,7 +40,7 @@ public static class PostProcessor
                 if (grid[i, j] != TileType.Forest) {
                     continue;
                 }
-                var neighbors = Utils.getMooreNeighbors(i, j, ref grid);
+                Dictionary<TileType, List<int[]>> neighbors = Utils.getMooreNeighbors(i, j, ref grid);
                 if (neighbors[TileType.Ocean].Count != 0) {
                     // if on coastline
                     grid[i, j] = TileType.Beach;
