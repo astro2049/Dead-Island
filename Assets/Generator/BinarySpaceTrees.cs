@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum TileType
 {
@@ -29,6 +31,13 @@ public class BinarySpaceTrees : MonoBehaviour
     private List<Island> leafIslands = new List<Island>();
     private NavMeshSurface navMeshSurface;
 
+    public GameObject survivorsGameObject, zombiesGameObject;
+    public GameObject survivorPrefab, zombiePrefab;
+    private List<GameObject> survivors = new List<GameObject>();
+    private List<GameObject> zombies = new List<GameObject>();
+
+    public GameObject safeZoneTextPrefab;
+
     private void Start()
     {
         // Initializations
@@ -48,6 +57,8 @@ public class BinarySpaceTrees : MonoBehaviour
         grid = new TileType[width, height];
         initialIsland = new Island(0, 0, width, height, islandPadding);
         partition(ref initialIsland);
+
+        // Post process
         PostProcessor.connectIslands(ref initialIsland, ref grid);
 
         // Draw the tile grid
@@ -55,6 +66,10 @@ public class BinarySpaceTrees : MonoBehaviour
 
         // Build nav mesh
         navMeshSurface.BuildNavMesh();
+
+        // Place survivors and zombies, and safe zone text
+        placeActors();
+        placeSafeZoneText();
     }
 
     private void partition(ref Island island)
@@ -115,18 +130,68 @@ public class BinarySpaceTrees : MonoBehaviour
                 switch (grid[i, j]) {
                     case TileType.Beach:
                         tile = Instantiate(beachTile, tileCollection.transform);
-                        tile.transform.localPosition =
-                            new Vector3(j * tileSize - widthCenterOffset, 0, -i * tileSize + heightCenterOffset);
+                        tile.transform.localPosition = girdCoordToWorld(i, j);
                         break;
                     case TileType.Forest:
                         tile = Instantiate(forestTile, tileCollection.transform);
-                        tile.transform.localPosition =
-                            new Vector3(j * tileSize - widthCenterOffset, 0, -i * tileSize + heightCenterOffset);
+                        tile.transform.localPosition = girdCoordToWorld(i, j);
                         break;
                     default:
                         break;
                 }
             }
+        }
+    }
+
+    private Vector3Int girdCoordToWorld(int x, int y)
+    {
+        return new Vector3Int(y * tileSize - widthCenterOffset, 0, -x * tileSize + heightCenterOffset);
+    }
+
+    private void placeActors()
+    {
+        int distance = 4;
+        for (int i = 0; i < leafIslands.Count - 1; i++) {
+            var island = leafIslands[i];
+            var center = island.getCenter();
+            var worldCoord = girdCoordToWorld(center.x, center.y);
+            Debug.DrawLine(new Vector3(0, 20, 0), new Vector3(worldCoord.x, 0, worldCoord.z), Color.green, 5);
+            int actorCount = Random.Range(1, 4);
+            for (int j = 0; j < actorCount; j++) {
+                var direction = Random.insideUnitCircle;
+                NavMeshHit hit;
+                NavMesh.SamplePosition(new Vector3(worldCoord.x + distance * direction.x, 0, worldCoord.z + distance * direction.y), out hit, distance, NavMesh.AllAreas);
+                if (i == 0) {
+                    var survivor = Instantiate(survivorPrefab, hit.position, Quaternion.identity, survivorsGameObject.transform);
+                    survivor.transform.position = hit.position;
+                    survivors.Add(survivor);
+                } else {
+                    var zombie = Instantiate(zombiePrefab, hit.position, Quaternion.identity, zombiesGameObject.transform);
+                    zombie.transform.position = hit.position;
+                    zombies.Add(zombie);
+                }
+            }
+        }
+    }
+
+    private void placeSafeZoneText()
+    {
+        var center = leafIslands.Last().getCenter();
+        var safeZone = Instantiate(safeZoneTextPrefab, girdCoordToWorld(center.x, center.y), Quaternion.identity);
+        foreach (var survivor in survivors) {
+            survivor.GetComponent<SurvivorAI>().safeZoneLocation = safeZone.transform;
+        }
+    }
+
+    public void ActivateActors()
+    {
+        foreach (var survivor in survivors) {
+            var survivorAI = survivor.GetComponent<SurvivorAI>();
+            survivorAI.ActivateBT();
+        }
+        foreach (var zombie in zombies) {
+            var zombieAI = zombie.GetComponent<ZombieAI>();
+            zombieAI.ActivateBT();
         }
     }
 }

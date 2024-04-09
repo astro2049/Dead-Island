@@ -9,22 +9,26 @@ public static class PostProcessor
         if (island.getIsLeaf()) {
             return;
         }
-        Vector2Int center1 = island.getLeftIsland().getCenter();
-        Vector2Int center2 = island.getRightIsland().getCenter();
+        var center1 = island.getLeftIsland().getCenter();
+        var center2 = island.getRightIsland().getCenter();
         int x1 = center1.x, y1 = center1.y, x2 = center2.x, y2 = center2.y;
         if (x1 == x2) {
             for (int j = y1 + 1; j < y2; j++) {
                 if (grid[x1, j] != TileType.Ocean) {
                     continue;
                 }
-                grid[x1, j] = TileType.Beach;
+                grid[x1 - 1, j] = TileType.Beach;
+                grid[x1, j] = Random.Range(0, 100) < 90 ? TileType.Forest : TileType.Beach;
+                grid[x1 + 1, j] = TileType.Beach;
             }
         } else {
             for (int i = x1 + 1; i < x2; i++) {
                 if (grid[i, y1] != TileType.Ocean) {
                     continue;
                 }
-                grid[i, y1] = TileType.Beach;
+                grid[i, y1 - 1] = TileType.Beach;
+                grid[i, y1] = Random.Range(0, 100) < 90 ? TileType.Forest : TileType.Beach;
+                grid[i, y1 + 1] = TileType.Beach;
             }
         }
         connectIslands(ref island.getLeftIsland(), ref grid);

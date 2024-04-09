@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class AuralPerception : MonoBehaviour
 {
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Survivor")) {
+            transform.parent.GetComponent<ZombieAI>().gainPerceptionOnSurvivor(other.gameObject, PerceptionType.Aural);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        if (other.CompareTag("Survivor")) {
+            transform.parent.GetComponent<ZombieAI>().losePerceptionOnSurvivor(other.gameObject, PerceptionType.Aural);
+        }
     }
 }
