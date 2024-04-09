@@ -1,43 +1,90 @@
-using System.Collections;
 using System.Collections.Generic;
 using NPBehave;
 using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
+using Action = NPBehave.Action;
 
-public class SurvivorAI : MonoBehaviour
+namespace Agents
 {
-    public Transform safeZoneLocation;
-    private NavMeshAgent m_navMeshAgent;
-    private Root m_BT;
-
-    private void Start()
+    public class SurvivorAI : IndividualAgent
     {
-        m_navMeshAgent = GetComponent<NavMeshAgent>();
-        InitializeBT();
-    }
+        public Transform safeZoneLocation;
+        private readonly float fireCooldown = 1.0f;
+        private float currentFireCooldown = 0.0f;
 
-    private void InitializeBT()
-    {
-        m_BT = new Root(
-            new Action(NavigateToSafeZone)
-        );
-    }
+        private void Start()
+        {
+            m_navMeshAgent = GetComponent<NavMeshAgent>();
+            InitializeBT();
+        }
 
-    public void ActivateBT()
-    {
-        m_BT.Start();
-    }
+        private void InitializeBT()
+        {
+            m_BT = new Root(
+                new Selector(
+                    new BlackboardCondition("hasATarget", Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART,
+                        new Action(NavigateToSafeZone)
+                    ),
+                    new Sequence(
+                        new Action(TurnTowardsTarget),
+                        new BlackboardCondition("isFacingTarget", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
+                            new Action(Shoot))
+                    ))
+            );
+            m_BT.Blackboard["hasATarget"] = false;
+            m_BT.Blackboard["isFacingTarget"] = false;
+        }
 
-    public void DeactivateBT()
-    {
-        m_BT.Stop();
-    }
+        private void TurnTowardsTarget()
+        {
+            m_navMeshAgent.ResetPath();
+            var targetDirection = m_target.transform.position - transform.position;
+            float angle = Vector3.Angle(transform.forward, targetDirection);
+            Debug.Log(angle);
+            if (angle < 10) {
+                m_BT.Blackboard["isFacingTarget"] = true;
+                return;
+            }
+            var targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2); // 180 degrees per sec
+        }
 
-    private void NavigateToSafeZone()
-    {
-        if (!m_navMeshAgent.hasPath) {
-            m_navMeshAgent.SetDestination(safeZoneLocation.position);
+        private void Shoot()
+        {
+            if (currentFireCooldown <= 0) {
+                currentFireCooldown = fireCooldown;
+                Debug.Log("Shot fired");
+                m_target.GetComponent<IndividualAgent>().Die();
+                m_targets.Remove(m_target);
+                clearTarget(m_target);
+                TargetClosestAgent();
+            }
+        }
+
+        private void NavigateToSafeZone()
+        {
+            if (!m_navMeshAgent.hasPath) {
+                m_navMeshAgent.SetDestination(safeZoneLocation.position);
+            }
+        }
+
+        protected override void clearTarget(GameObject agent)
+        {
+            base.clearTarget(agent);
+            m_BT.Blackboard["isFacingTarget"] = false;
+        }
+
+        protected override void setTarget(GameObject agent)
+        {
+            Debug.Log("Zombie spotted");
+            base.setTarget(agent);
+        }
+
+        private void Update()
+        {
+            if (currentFireCooldown > 0) {
+                currentFireCooldown -= Time.deltaTime;
+            }
         }
     }
 }

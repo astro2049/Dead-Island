@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Agents;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,8 +25,8 @@ public class BinarySpaceTrees : MonoBehaviour
     public GameObject tiles;
     public int iterations;
 
-    private readonly int tileSize = 1;
-    private int widthCenterOffset, heightCenterOffset;
+    private readonly float tileSize = 1.5f;
+    private float widthCenterOffset, heightCenterOffset;
     private Island initialIsland;
 
     private List<Island> leafIslands = new List<Island>();
@@ -143,20 +144,20 @@ public class BinarySpaceTrees : MonoBehaviour
         }
     }
 
-    private Vector3Int girdCoordToWorld(int x, int y)
+    private Vector3 girdCoordToWorld(int x, int y)
     {
-        return new Vector3Int(y * tileSize - widthCenterOffset, 0, -x * tileSize + heightCenterOffset);
+        return new Vector3(y * tileSize - widthCenterOffset, 0, -x * tileSize + heightCenterOffset);
     }
 
     private void placeActors()
     {
-        int distance = 4;
+        int distance = 10;
         for (int i = 0; i < leafIslands.Count - 1; i++) {
             var island = leafIslands[i];
             var center = island.getCenter();
             var worldCoord = girdCoordToWorld(center.x, center.y);
             Debug.DrawLine(new Vector3(0, 20, 0), new Vector3(worldCoord.x, 0, worldCoord.z), Color.green, 5);
-            int actorCount = Random.Range(1, 4);
+            int actorCount = Random.Range(5, 10);
             for (int j = 0; j < actorCount; j++) {
                 var direction = Random.insideUnitCircle;
                 NavMeshHit hit;
@@ -165,6 +166,7 @@ public class BinarySpaceTrees : MonoBehaviour
                     var survivor = Instantiate(survivorPrefab, hit.position, Quaternion.identity, survivorsGameObject.transform);
                     survivor.transform.position = hit.position;
                     survivors.Add(survivor);
+                    break;
                 } else {
                     var zombie = Instantiate(zombiePrefab, hit.position, Quaternion.identity, zombiesGameObject.transform);
                     zombie.transform.position = hit.position;
