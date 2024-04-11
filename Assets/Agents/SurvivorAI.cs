@@ -15,6 +15,7 @@ namespace Agents
 
         private void Start()
         {
+            agentType = AgentType.Survivor;
             m_navMeshAgent = GetComponent<NavMeshAgent>();
             InitializeBT();
         }
@@ -41,13 +42,12 @@ namespace Agents
             m_navMeshAgent.ResetPath();
             var targetDirection = m_target.transform.position - transform.position;
             float angle = Vector3.Angle(transform.forward, targetDirection);
-            Debug.Log(angle);
             if (angle < 10) {
                 m_BT.Blackboard["isFacingTarget"] = true;
                 return;
             }
             var targetRotation = Quaternion.LookRotation(targetDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime); // 360 degrees per sec
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 240 * Time.deltaTime);
         }
 
         private void Shoot()

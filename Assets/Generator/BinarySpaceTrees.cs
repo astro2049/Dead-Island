@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Agents;
+using TMPro;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -41,6 +42,9 @@ public class BinarySpaceTrees : MonoBehaviour
     public GameObject safeZoneTextPrefab;
 
     public GameObject startButton;
+    public int zombieCount, survivorCount;
+    public GameObject zombieCountText, survivorCountText;
+    public GameObject roundOverText;
 
     private void Start()
     {
@@ -168,12 +172,18 @@ public class BinarySpaceTrees : MonoBehaviour
                 if (i == 0) {
                     var survivor = Instantiate(survivorPrefab, hit.position, Quaternion.identity, survivorsGameObject.transform);
                     survivor.transform.position = hit.position;
+                    survivor.GetComponent<IndividualAgent>().bspComponent = this;
                     survivors.Add(survivor);
+                    survivorCount++;
+                    updateSurvivorCountText();
                     break;
                 } else {
                     var zombie = Instantiate(zombiePrefab, hit.position, Quaternion.identity, zombiesGameObject.transform);
                     zombie.transform.position = hit.position;
+                    zombie.GetComponent<IndividualAgent>().bspComponent = this;
                     zombies.Add(zombie);
+                    zombieCount++;
+                    updateZombieCountText();
                 }
             }
         }
@@ -198,6 +208,19 @@ public class BinarySpaceTrees : MonoBehaviour
         foreach (var zombie in zombies) {
             var zombieAI = zombie.GetComponent<ZombieAI>();
             zombieAI.ActivateBT();
+        }
+    }
+
+    public void updateZombieCountText()
+    {
+        zombieCountText.GetComponent<TextMeshPro>().text = zombieCount.ToString();
+    }
+
+    public void updateSurvivorCountText()
+    {
+        survivorCountText.GetComponent<TextMeshPro>().text = survivorCount.ToString();
+        if (survivorCount == 0) {
+            roundOverText.GetComponent<TextMeshPro>().text = "Game Over.";
         }
     }
 }

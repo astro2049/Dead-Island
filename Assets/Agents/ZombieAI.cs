@@ -7,8 +7,6 @@ using Action = NPBehave.Action;
 using Random = UnityEngine.Random;
 namespace Agents
 {
-
-
     public class ZombieAI : IndividualAgent
     {
         private bool m_isAttacking = false;
@@ -17,6 +15,7 @@ namespace Agents
 
         private void Start()
         {
+            agentType = AgentType.Zombie;
             m_navMeshAgent = GetComponent<NavMeshAgent>();
             InitializeBT();
             actionText = transform.Find("Text - Action").GetComponent<TextMeshPro>();

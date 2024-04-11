@@ -5,6 +5,12 @@ using UnityEngine.AI;
 
 namespace Agents
 {
+    public enum AgentType
+    {
+        Zombie = 0,
+        Survivor = 1
+    }
+
     public enum LifeStatus
     {
         Alive = 0,
@@ -17,7 +23,10 @@ namespace Agents
         protected GameObject m_target;
         protected NavMeshAgent m_navMeshAgent;
         protected Root m_BT;
+        protected AgentType agentType;
         public LifeStatus lifeStatus = LifeStatus.Alive;
+
+        public BinarySpaceTrees bspComponent;
 
         public void ActivateBT()
         {
@@ -65,7 +74,6 @@ namespace Agents
         public virtual void SenseIndividualAgent(GameObject agent, PerceptionType perception)
         {
             if (!m_targets.ContainsKey(agent)) {
-                Debug.Log("Spotted");
                 m_targets.Add(agent, new HashSet<PerceptionType>());
             }
             m_targets[agent].Add(perception);
@@ -80,12 +88,10 @@ namespace Agents
         {
             m_targets[agent].Remove(perception);
             if (m_targets[agent].Count == 0) {
-                Debug.Log("Unspotted");
                 m_targets.Remove(agent);
             }
 
             if (agent == m_target) {
-                Debug.Log("Lost target");
                 clearTarget(agent);
 
                 // Find a new target (closest agent)
@@ -101,6 +107,13 @@ namespace Agents
             m_navMeshAgent.enabled = false;
             transform.Rotate(new Vector3(0, 90, 0));
             DeactivateBT();
+            if (agentType == AgentType.Zombie) {
+                bspComponent.zombieCount--;
+                bspComponent.updateZombieCountText();
+            } else {
+                bspComponent.survivorCount--;
+                bspComponent.updateSurvivorCountText();
+            }
         }
     }
 }
