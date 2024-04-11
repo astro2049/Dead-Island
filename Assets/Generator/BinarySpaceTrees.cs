@@ -5,6 +5,7 @@ using Agents;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public enum TileType
 {
@@ -38,6 +39,8 @@ public class BinarySpaceTrees : MonoBehaviour
     private List<GameObject> zombies = new List<GameObject>();
 
     public GameObject safeZoneTextPrefab;
+
+    public GameObject startButton;
 
     private void Start()
     {
@@ -187,6 +190,7 @@ public class BinarySpaceTrees : MonoBehaviour
 
     public void ActivateActors()
     {
+        startButton.GetComponent<Button>().interactable = false;
         foreach (var survivor in survivors) {
             var survivorAI = survivor.GetComponent<SurvivorAI>();
             survivorAI.ActivateBT();

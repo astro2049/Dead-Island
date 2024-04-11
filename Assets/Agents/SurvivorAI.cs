@@ -47,7 +47,7 @@ namespace Agents
                 return;
             }
             var targetRotation = Quaternion.LookRotation(targetDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2); // 180 degrees per sec
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime); // 360 degrees per sec
         }
 
         private void Shoot()

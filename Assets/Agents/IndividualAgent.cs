@@ -95,8 +95,10 @@ namespace Agents
 
         public virtual void Die()
         {
+            if (lifeStatus == LifeStatus.Dead) {
+                return;
+            }
             m_navMeshAgent.enabled = false;
-            // m_navMeshAgent.ResetPath();
             transform.Rotate(new Vector3(0, 90, 0));
             DeactivateBT();
         }

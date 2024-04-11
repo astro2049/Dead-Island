@@ -2142,6 +2142,7 @@ MonoBehaviour:
   survivorPrefab: {fileID: 8133291760530916415, guid: 974c36c39224c3e47a33a90c10812bd3, type: 3}
   zombiePrefab: {fileID: 905004437280009357, guid: d2d7a95a0b9647b44b6bebddb15522b3, type: 3}
   safeZoneTextPrefab: {fileID: 8001615150575533420, guid: c5e72610812841b4db64d34f71b10082, type: 3}
+  startButton: {fileID: 686120890}
 --- !u!114 &1607745485
 MonoBehaviour:
   m_ObjectHideFlags: 0
