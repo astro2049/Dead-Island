@@ -9,6 +9,7 @@ namespace Agents
     public class SurvivorAI : IndividualAgent
     {
         public Transform safeZoneLocation;
+        public GameObject rifle;
         private readonly float fireCooldown = 1.0f;
         private float currentFireCooldown = 0.0f;
 
@@ -52,6 +53,8 @@ namespace Agents
         private void Shoot()
         {
             if (currentFireCooldown <= 0) {
+                rifle.GetComponent<AudioSource>().Play();
+                rifle.GetComponent<ParticleSystem>().Play();
                 currentFireCooldown = fireCooldown;
                 Debug.Log("Shot fired");
                 m_target.GetComponent<IndividualAgent>().Die();
