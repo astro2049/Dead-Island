@@ -769,7 +769,7 @@ GameObject:
   - component: {fileID: 510317772}
   - component: {fileID: 510317771}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: Text (TMP) - Round Over
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -782,16 +782,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510317769}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 15.476643}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3236831278469686113}
+  m_Father: {fileID: 1775230139}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 12.933334, y: 0}
   m_SizeDelta: {x: 26, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &510317771
@@ -1084,8 +1084,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1607745484}
-        m_TargetAssemblyTypeName: BinarySpaceTrees, Assembly-CSharp
+      - m_Target: {fileID: 693767716}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ActivateActors
         m_Mode: 1
         m_Arguments:
@@ -1143,7 +1143,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693767717}
+  - component: {fileID: 693767719}
   - component: {fileID: 693767716}
+  - component: {fileID: 693767718}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1163,6 +1165,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0e0eae47bf71641944878097b03cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_startButton: {fileID: 686120890}
+  m_survivors: []
+  m_zombies: []
+  m_zombieCount: 0
+  m_survivorCount: 0
+  m_zombieCountText: {fileID: 501881488}
+  m_survivorCountText: {fileID: 942604167}
+  m_roundOverText: {fileID: 510317769}
 --- !u!4 &693767717
 Transform:
   m_ObjectHideFlags: 0
@@ -1178,6 +1188,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &693767718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693767715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!114 &693767719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693767715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d8bc4abd43fbde48b5218526ef231ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_width: 64
+  m_height: 64
+  m_maxIslandWidth: 32
+  m_maxIslandHeight: 32
+  m_splitWiggle: 8
+  m_islandPadding: 2
+  m_beachTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
+  m_forestTile: {fileID: 7130005556168028831, guid: 746870aee884b1c42937933256a3fa4d, type: 3}
+  m_tiles: {fileID: 1078289693}
+  m_iterations: 20
+  m_widthCenterOffset: 0
+  m_heightCenterOffset: 0
+  m_survivorsGameObject: {fileID: 1482619393}
+  m_zombiesGameObject: {fileID: 1012016659}
+  m_survivorPrefab: {fileID: 8133291760530916415, guid: 974c36c39224c3e47a33a90c10812bd3, type: 3}
+  m_zombiePrefab: {fileID: 905004437280009357, guid: d2d7a95a0b9647b44b6bebddb15522b3, type: 3}
+  m_safeZoneTextPrefab: {fileID: 8001615150575533420, guid: c5e72610812841b4db64d34f71b10082, type: 3}
 --- !u!1 &696489898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2738,103 +2808,6 @@ Transform:
   - {fileID: 1775230139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1607745481
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1607745483}
-  - component: {fileID: 1607745484}
-  - component: {fileID: 1607745485}
-  m_Layer: 0
-  m_Name: MapGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1607745483
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607745481}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -102.133026, y: -201.92035, z: 11.124122}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1607745484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607745481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eb3b1a6cce13bc4da57c1855195421e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 64
-  height: 64
-  maxIslandWidth: 32
-  maxIslandHeight: 32
-  wiggle: 8
-  islandPadding: 2
-  beachTile: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
-  forestTile: {fileID: 7130005556168028831, guid: 746870aee884b1c42937933256a3fa4d, type: 3}
-  tiles: {fileID: 1078289693}
-  iterations: 20
-  survivorsGameObject: {fileID: 1482619393}
-  zombiesGameObject: {fileID: 1012016659}
-  survivorPrefab: {fileID: 8133291760530916415, guid: 974c36c39224c3e47a33a90c10812bd3, type: 3}
-  zombiePrefab: {fileID: 905004437280009357, guid: d2d7a95a0b9647b44b6bebddb15522b3, type: 3}
-  safeZoneTextPrefab: {fileID: 8001615150575533420, guid: c5e72610812841b4db64d34f71b10082, type: 3}
-  startButton: {fileID: 686120890}
-  zombieCount: 0
-  survivorCount: 0
-  zombieCountText: {fileID: 501881488}
-  survivorCountText: {fileID: 942604167}
-  roundOverText: {fileID: 510317769}
---- !u!114 &1607745485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607745481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 1
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
-  m_BuildHeightMesh: 0
 --- !u!1 &1723959539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2970,7 +2943,7 @@ Transform:
   - {fileID: 569251023}
   - {fileID: 7872496005303432199}
   - {fileID: 494028927}
-  - {fileID: 3236831278469686113}
+  - {fileID: 510317770}
   m_Father: {fileID: 1606513343}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &1834382679
@@ -3421,38 +3394,6 @@ Transform:
   - {fileID: 274571359}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &285075860246203142
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3236831278469686113}
-  m_Layer: 0
-  m_Name: SafeZoneText (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3236831278469686113
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 285075860246203142}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 12.933331, y: 0, z: 15.476639}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 510317770}
-  m_Father: {fileID: 1775230139}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &7872496005303432199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5048153743444220350, guid: 974c36c39224c3e47a33a90c10812bd3, type: 3}
@@ -3539,7 +3480,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 371864610}
-  - {fileID: 1607745483}
   - {fileID: 1078289694}
   - {fileID: 1723959543}
   - {fileID: 568907499}

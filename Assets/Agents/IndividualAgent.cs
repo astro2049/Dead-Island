@@ -19,14 +19,14 @@ namespace Agents
 
     public class IndividualAgent : MonoBehaviour
     {
+        public GameManager gameManager;
+
         protected Dictionary<GameObject, HashSet<PerceptionType>> m_targets = new Dictionary<GameObject, HashSet<PerceptionType>>();
         protected GameObject m_target;
         protected NavMeshAgent m_navMeshAgent;
         protected Root m_BT;
         protected AgentType agentType;
         public LifeStatus lifeStatus = LifeStatus.Alive;
-
-        public BinarySpaceTrees bspComponent;
 
         public void ActivateBT()
         {
@@ -108,11 +108,11 @@ namespace Agents
             transform.Rotate(new Vector3(0, 90, 0));
             DeactivateBT();
             if (agentType == AgentType.Zombie) {
-                bspComponent.zombieCount--;
-                bspComponent.updateZombieCountText();
+                gameManager.m_zombieCount--;
+                gameManager.UpdateZombieCountText();
             } else {
-                bspComponent.survivorCount--;
-                bspComponent.updateSurvivorCountText();
+                gameManager.m_survivorCount--;
+                gameManager.UpdateSurvivorCountText();
             }
         }
     }

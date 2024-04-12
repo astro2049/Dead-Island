@@ -2,11 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public static class CellularAutomata
+public class CellularAutomata
 {
-    public static int iterations;
+    private readonly int iterations;
+    private TileType[,] grid;
 
-    public static Island generateSimpleIsland(ref Island island, ref TileType[,] grid)
+    public CellularAutomata(int pIterations, TileType[,] pGrid)
+    {
+        iterations = pIterations;
+        grid = pGrid;
+    }
+
+    public Island GenerateSimpleIsland(Island island)
     {
         Vector2Int topLeft = island.getTopLeft(), downRight = island.getDownRight();
         int padding = island.getPadding();
@@ -18,10 +25,10 @@ public static class CellularAutomata
         return island;
     }
 
-    private static void initializeIsland(ref Island island, ref TileType[,] grid)
+    private void InitializeIsland(Island island)
     {
         // Island minimum width = 3 + 2 * padding
-        Vector2Int islandCenter = island.getCenter();
+        var islandCenter = island.getCenter();
         int x = islandCenter.x, y = islandCenter.y;
         for (int i = -1; i <= 1; i++) {
             int xx = x + i;
@@ -35,9 +42,9 @@ public static class CellularAutomata
         }
     }
 
-    public static void generateIsland(ref Island island, ref TileType[,] grid)
+    public void GenerateIsland(Island island)
     {
-        initializeIsland(ref island, ref grid);
+        InitializeIsland(island);
 
         Vector2Int topLeft = island.getTopLeft(), downRight = island.getDownRight();
         int padding = island.getPadding();
@@ -47,19 +54,19 @@ public static class CellularAutomata
             TileType[,] newGrid = grid;
             for (int i = topLeft.x + padding; i < downRight.x - padding; i++) {
                 for (int j = topLeft.y + padding; j < downRight.y - padding; j++) {
-                    newGrid[i, j] = getNewState(i, j, ref grid);
+                    newGrid[i, j] = GetNewState(i, j);
                 }
             }
             grid = newGrid;
         }
     }
 
-    private static TileType getNewState(int x, int y, ref TileType[,] grid)
+    private TileType GetNewState(int x, int y)
     {
         if (grid[x, y] != TileType.Ocean) {
             return grid[x, y];
         }
-        Dictionary<TileType, List<int[]>> neighbors = Utils.getMooreNeighbors(x, y, ref grid);
+        Dictionary<TileType, List<int[]>> neighbors = Utils.GetMooreNeighbors(x, y, grid);
         int landNeighbors = neighbors[TileType.Forest].Count;
         if (landNeighbors >= 3) {
             return Random.Range(0, 100) > 50 ? TileType.Forest : TileType.Ocean;

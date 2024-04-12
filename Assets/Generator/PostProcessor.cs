@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class PostProcessor
+public class PostProcessor
 {
-    public static void connectIslands(ref Island island, ref TileType[,] grid)
+    private TileType[,] grid;
+
+    public PostProcessor(TileType[,] pGrid)
+    {
+        grid = pGrid;
+    }
+
+    public void ConnectIslands(Island island)
     {
         if (island.getIsLeaf()) {
             return;
@@ -31,11 +38,11 @@ public static class PostProcessor
                 grid[i, y1 + 1] = TileType.Beach;
             }
         }
-        connectIslands(ref island.getLeftIsland(), ref grid);
-        connectIslands(ref island.getRightIsland(), ref grid);
+        ConnectIslands(island.getLeftIsland());
+        ConnectIslands(island.getRightIsland());
     }
 
-    public static void generateCoastlines(ref Island island, ref TileType[,] grid)
+    public void GenerateCoastlines(Island island)
     {
         Vector2Int topLeft = island.getTopLeft(), downRight = island.getDownRight();
         int padding = island.getPadding();
@@ -44,7 +51,7 @@ public static class PostProcessor
                 if (grid[i, j] != TileType.Forest) {
                     continue;
                 }
-                Dictionary<TileType, List<int[]>> neighbors = Utils.getMooreNeighbors(i, j, ref grid);
+                Dictionary<TileType, List<int[]>> neighbors = Utils.GetMooreNeighbors(i, j, grid);
                 if (neighbors[TileType.Ocean].Count != 0) {
                     // if on coastline
                     grid[i, j] = TileType.Beach;

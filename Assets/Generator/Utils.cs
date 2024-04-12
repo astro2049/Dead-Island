@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Utils
 {
-    public static Dictionary<TileType, List<int[]>> getMooreNeighbors(int x, int y, ref TileType[,] grid)
+    public static Dictionary<TileType, List<int[]>> GetMooreNeighbors(int x, int y, TileType[,] grid)
     {
         var mooreNeighbors = new Dictionary<TileType, List<int[]>> {
             { TileType.Ocean, new List<int[]>() },
