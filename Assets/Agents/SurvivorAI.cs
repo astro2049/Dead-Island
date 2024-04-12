@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using NPBehave;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,8 +7,8 @@ namespace Agents
 {
     public class SurvivorAI : IndividualAgent
     {
-        public Transform safeZoneLocation;
-        public GameObject rifle;
+        public Transform m_safeZoneTransform;
+        public GameObject m_rifle;
         private readonly float fireCooldown = 1.0f;
         private float currentFireCooldown = 0.0f;
 
@@ -53,8 +52,8 @@ namespace Agents
         private void Shoot()
         {
             if (currentFireCooldown <= 0) {
-                rifle.GetComponent<AudioSource>().Play();
-                rifle.GetComponent<ParticleSystem>().Play();
+                m_rifle.GetComponent<AudioSource>().Play();
+                m_rifle.GetComponent<ParticleSystem>().Play();
                 currentFireCooldown = fireCooldown;
                 Debug.Log("Shot fired");
                 m_target.GetComponent<IndividualAgent>().Die();
@@ -67,7 +66,7 @@ namespace Agents
         private void NavigateToSafeZone()
         {
             if (!m_navMeshAgent.hasPath) {
-                m_navMeshAgent.SetDestination(safeZoneLocation.position);
+                m_navMeshAgent.SetDestination(m_safeZoneTransform.position);
             }
         }
 

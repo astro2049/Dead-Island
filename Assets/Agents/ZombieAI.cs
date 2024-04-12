@@ -9,16 +9,14 @@ namespace Agents
 {
     public class ZombieAI : IndividualAgent
     {
-        private bool m_isAttacking = false;
-        private bool hasDestination = false;
-        private TextMeshPro actionText;
+        private TextMeshPro m_actionText;
 
         private void Start()
         {
             agentType = AgentType.Zombie;
             m_navMeshAgent = GetComponent<NavMeshAgent>();
             InitializeBT();
-            actionText = transform.Find("Text - Action").GetComponent<TextMeshPro>();
+            m_actionText = transform.Find("Text - Action").GetComponent<TextMeshPro>();
         }
 
         private void InitializeBT()
@@ -44,7 +42,7 @@ namespace Agents
         private void Roam()
         {
             m_navMeshAgent.speed = 2;
-            actionText.text = "";
+            m_actionText.text = "";
             if (m_navMeshAgent.remainingDistance <= m_navMeshAgent.stoppingDistance) {
                 generateARandomDestination();
             }
@@ -64,7 +62,7 @@ namespace Agents
         private void Chase()
         {
             m_navMeshAgent.speed = 7;
-            actionText.text = "Chase";
+            m_actionText.text = "Chase";
             m_navMeshAgent.SetDestination(m_target.transform.position);
         }
 

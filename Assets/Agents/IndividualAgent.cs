@@ -2,6 +2,7 @@
 using UnityEngine;
 using NPBehave;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Agents
 {
@@ -19,7 +20,7 @@ namespace Agents
 
     public class IndividualAgent : MonoBehaviour
     {
-        public GameManager gameManager;
+        public GameManager m_gameManager;
 
         protected Dictionary<GameObject, HashSet<PerceptionType>> m_targets = new Dictionary<GameObject, HashSet<PerceptionType>>();
         protected GameObject m_target;
@@ -108,11 +109,11 @@ namespace Agents
             transform.Rotate(new Vector3(0, 90, 0));
             DeactivateBT();
             if (agentType == AgentType.Zombie) {
-                gameManager.m_zombieCount--;
-                gameManager.UpdateZombieCountText();
+                m_gameManager.m_zombieCount--;
+                m_gameManager.UpdateZombieCountText();
             } else {
-                gameManager.m_survivorCount--;
-                gameManager.UpdateSurvivorCountText();
+                m_gameManager.m_survivorCount--;
+                m_gameManager.UpdateSurvivorCountText();
             }
         }
     }

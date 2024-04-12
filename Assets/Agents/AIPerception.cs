@@ -10,18 +10,18 @@ namespace Agents
     public class AIPerception : MonoBehaviour
     {
         public PerceptionType m_perception;
-        private IndividualAgent individualAI;
+        private IndividualAgent m_individualAI;
 
         private void Start()
         {
-            individualAI = transform.parent.transform.parent.gameObject.GetComponent<IndividualAgent>();
+            m_individualAI = transform.parent.transform.parent.gameObject.GetComponent<IndividualAgent>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             var otherGameObject = other.transform.parent.gameObject;
             if (otherGameObject.GetComponent<IndividualAgent>().lifeStatus == LifeStatus.Alive && !otherGameObject.CompareTag(transform.tag)) {
-                individualAI.SenseIndividualAgent(otherGameObject, m_perception);
+                m_individualAI.SenseIndividualAgent(otherGameObject, m_perception);
             }
         }
 
@@ -29,7 +29,7 @@ namespace Agents
         {
             var otherGameObject = other.transform.parent.gameObject;
             if (otherGameObject.GetComponent<IndividualAgent>().lifeStatus == LifeStatus.Alive && !otherGameObject.CompareTag(transform.tag)) {
-                individualAI.UnsenseIndividualAgent(otherGameObject, m_perception);
+                m_individualAI.UnsenseIndividualAgent(otherGameObject, m_perception);
             }
         }
     }
