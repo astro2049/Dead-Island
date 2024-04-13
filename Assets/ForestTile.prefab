@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 819347250407695292}
   - component: {fileID: 6373039410074655376}
   m_Layer: 0
-  m_Name: Prefab_ForestTile
+  m_Name: ForestTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

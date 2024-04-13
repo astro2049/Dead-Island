@@ -4,6 +4,7 @@ using Agents;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Generator
 {
@@ -27,8 +28,8 @@ namespace Generator
         public int m_maxIslandWidth, m_maxIslandHeight;
         public int m_splitWiggle;
         public int m_islandPadding;
-        public GameObject m_beachTile, m_forestTile;
-        public GameObject m_tiles;
+        public GameObject m_beachTilePrefab, m_forestTilePrefab;
+        public GameObject m_tilesGameObject;
         public int m_iterations;
 
         public readonly float tileSize = 1.5f;
@@ -41,7 +42,7 @@ namespace Generator
         public GameObject m_survivorsGameObject, m_zombiesGameObject;
         public GameObject m_survivorPrefab, m_zombiePrefab;
 
-        public GameObject m_safeZoneTextPrefab;
+        public GameObject m_safeZonePrefab;
 
         private void Start()
         {
@@ -74,7 +75,7 @@ namespace Generator
             PP.ConnectIslands(initialIsland);
 
             // Draw the tile grid
-            DrawGrid(m_tiles);
+            DrawGrid(m_tilesGameObject);
 
             // Build nav mesh
             m_navMeshSurface.BuildNavMesh();
@@ -101,11 +102,11 @@ namespace Generator
                     GameObject tile;
                     switch (grid[i, j]) {
                         case TileType.Beach:
-                            tile = Instantiate(m_beachTile, tileCollection.transform);
+                            tile = Instantiate(m_beachTilePrefab, tileCollection.transform);
                             tile.transform.localPosition = GirdCoordToWorld(i, j);
                             break;
                         case TileType.Forest:
-                            tile = Instantiate(m_forestTile, tileCollection.transform);
+                            tile = Instantiate(m_forestTilePrefab, tileCollection.transform);
                             tile.transform.localPosition = GirdCoordToWorld(i, j);
                             break;
                         default:
@@ -165,7 +166,7 @@ namespace Generator
         private void PlaceSafeZone(int i)
         {
             var center = leafIslands[i].getCenter();
-            var safeZone = Instantiate(m_safeZoneTextPrefab, GirdCoordToWorld(center.x, center.y), Quaternion.identity);
+            var safeZone = Instantiate(m_safeZonePrefab, GirdCoordToWorld(center.x, center.y), Quaternion.identity);
             foreach (var survivor in gameManager.m_survivors) {
                 survivor.GetComponent<SurvivorAI>().m_safeZoneTransform = safeZone.transform;
             }
