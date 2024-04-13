@@ -254,7 +254,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4061793534009978346}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f19e3fdb9c8082647a2c32beca28ba84, type: 3}
@@ -5251,7 +5251,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8902545901452712909
 MonoBehaviour:
@@ -5663,6 +5663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_gameManager: {fileID: 0}
   lifeStatus: 0
+  m_spawnTransform: {x: 0, y: 0, z: 0}
   m_safeZoneTransform: {fileID: 0}
   m_rifle: {fileID: 4061793534009978346}
 --- !u!195 &7800267294765764034

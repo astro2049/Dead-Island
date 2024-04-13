@@ -29,7 +29,7 @@ namespace Agents
         {
             var otherGameObject = other.transform.parent.gameObject;
             if (otherGameObject.GetComponent<IndividualAgent>().lifeStatus == LifeStatus.Alive && !otherGameObject.CompareTag(transform.tag)) {
-                m_individualAI.UnsenseIndividualAgent(otherGameObject, m_perception);
+                m_individualAI.LosePerceptionOnIndividualAgent(otherGameObject, m_perception);
             }
         }
     }

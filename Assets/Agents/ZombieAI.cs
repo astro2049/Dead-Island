@@ -69,21 +69,13 @@ namespace Agents
         private void Attack()
         {
             m_target.GetComponent<IndividualAgent>().Die();
-            m_targets.Remove(m_target);
-            clearTarget(m_target);
-            TargetClosestAgent();
+            RetargetClosestAgent();
         }
 
-        protected override void clearTarget(GameObject agent)
+        protected override void clearTarget()
         {
-            base.clearTarget(agent);
+            base.clearTarget();
             m_BT.Blackboard["withinAttackRadius"] = false;
-        }
-
-        protected override void setTarget(GameObject agent)
-        {
-            Debug.Log("Survivor spotted");
-            base.setTarget(agent);
         }
 
         private void Update()

@@ -42,8 +42,9 @@ namespace Agents
             }
         }
 
-        protected virtual void clearTarget(GameObject agent)
+        protected virtual void clearTarget()
         {
+            m_targets.Remove(m_target);
             // Clear flags and m_target
             m_BT.Blackboard["hasATarget"] = false;
             m_target = null;
@@ -55,16 +56,17 @@ namespace Agents
             m_target = agent;
         }
 
-        protected void TargetClosestAgent()
+        protected void RetargetClosestAgent()
         {
+            clearTarget();
             GameObject closestAgent = null;
             float closestDistance = Mathf.Infinity;
             foreach (KeyValuePair<GameObject, HashSet<PerceptionType>> pair in m_targets) {
-                var zombie = pair.Key;
-                float distance = Vector3.Distance(transform.position, zombie.transform.position);
+                var foe = pair.Key;
+                float distance = Vector3.Distance(transform.position, foe.transform.position);
                 if (distance < closestDistance) {
                     closestDistance = distance;
-                    closestAgent = zombie;
+                    closestAgent = foe;
                 }
             }
             if (closestAgent) {
@@ -85,18 +87,15 @@ namespace Agents
             }
         }
 
-        public virtual void UnsenseIndividualAgent(GameObject agent, PerceptionType perception)
+        public virtual void LosePerceptionOnIndividualAgent(GameObject agent, PerceptionType perception)
         {
             m_targets[agent].Remove(perception);
             if (m_targets[agent].Count == 0) {
-                m_targets.Remove(agent);
-            }
-
-            if (agent == m_target) {
-                clearTarget(agent);
-
-                // Find a new target (closest agent)
-                TargetClosestAgent();
+                if (agent == m_target) {
+                    RetargetClosestAgent();
+                } else {
+                    m_targets.Remove(agent);
+                }
             }
         }
 

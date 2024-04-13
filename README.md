@@ -8,15 +8,15 @@ The scene is set on a group of connected ocean islands. Survivors start on one i
 
 ## 0. Map Generation
 
-### 0. 0 The Map
+### 0.0 The Map
 
 64 * 64 tile map, with each tile = 1.5 * 1.5m.
 
 Island has two types of tiles: *Beach*, and *Forest*.
 
-Generated with binary space partitioning (BSP) and cellular automata (CA), and a post processor (I'll call it PP).
+Generated with binary space partitioning (BSP), cellular automata (CA), and a post processor (I'll call it PP).
 
-#### Generation Overview
+**Generation Overview**
 
 The map starts out with an ocean (which is, nothing).
 
@@ -36,53 +36,42 @@ The map starts out with an ocean (which is, nothing).
 
 ## 1. Agents
 
-There are *survivor* and *zombie*.
+There are survivors and zombies.
 
 Agents are controlled by behavior trees using NPBehave.
 
 
 
-### 1.1 Survivor
+### 1.1 Zombie
 
 
 
-### 1.2 Zombie
+### 1.2 Survivor
 
 
 
 ## References
 
-Cellular Automata
+**Cellular Automata**
 
-# Cellular Automata | Procedural Generation | Game Development Tutorial
+1. White Box Dev (2020) 'Cellular Automata | Procedural Generation | Game Development Tutorial', *YouTube*. Available at: https://www.youtube.com/watch?v=slTEz6555Ts [Accessed 27 Mar 2024].
 
+**Binary Space Trees/Partitioning**
 
+2. 'Basic BSP Dungeon generation' (n.d.) *RogueBasin*. Available at: https://www.roguebasin.com/index.php/Basic_BSP_Dungeon_generation [Accessed 31 March 2024].
 
-[![img](https://yt3.ggpht.com/1zP2ilLZW0rWnM_80RWGQ57XuJdpCYnedYJ32DElDU_DkwX7hVXQMX3tZToL5te8189920LH=s48-c-k-c0x00ffffff-no-rj)](https://www.youtube.com/@WhiteBoxDev)
+3. Sunny Valley Studio (2020) 'Binary Space Partitioning Algorithm - P13 - Unity Procedural Generation of a 2D Dungeon', *YouTube*. Available at: https://www.youtube.com/watch?v=nbi88hY9hcw&list=PLcRSafycjWFenI87z7uZHFv6cUG2Tzu9v&index=14 [Accessed 31 March 2024].
 
-[White Box Dev](https://www.youtube.com/@WhiteBoxDev)
+4. Uribe, G. (2019) 'Dungeon Generation using Binary Space Trees'. *Medium*. Available at: https://medium.com/@guribemontero/dungeon-generation-using-binary-space-trees-47d4a668e2d0 [Accessed 31 March 2024].
 
-57,001 views  19 Sept 2020
+**Ocean Texture**
 
-https://www.youtube.com/watch?v=slTEz6555Ts
+5. 'Shallow Ocean Terrain Texture' (2019) *Don't Starve Wiki*. Available at: https://dontstarve.fandom.com/wiki/Ocean?file=Shallow_Ocean_Terrain_Texture.png#Shipwrecked [Accessed 1 April 2024].
 
-Binary Space Trees/Partitioning
+**Unity Packages**
 
-https://www.roguebasin.com/index.php/Basic_BSP_Dungeon_generation
+6. Nilspferd (2019) *NPBehave - Event Driven Code Based Behaviour Trees*, v. 1.2.3. Available at: https://assetstore.unity.com/packages/tools/behavior-ai/npbehave-event-driven-code-based-behaviour-trees-75884 [Accessed 30 Jan 2024].
 
-https://www.youtube.com/watch?v=nbi88hY9hcw&list=PLcRSafycjWFenI87z7uZHFv6cUG2Tzu9v&index=14
-
-https://medium.com/@guribemontero/dungeon-generation-using-binary-space-trees-47d4a668e2d0
-
-Ocean Texture
-
-https://dontstarve.fandom.com/wiki/Ocean?file=Shallow_Ocean_Terrain_Texture.png#Shipwrecked
-
-
-
-Unity Packages:
-
-https://assetstore.unity.com/packages/tools/behavior-ai/npbehave-event-driven-code-based-behaviour-trees-75884
-
-https://assetstore.unity.com/packages/3d/vehicles/air/planes-choppers-polypack-194946
-
+7. Alstra Infinite (2021) *Planes & Choppers - PolyPack*, v. 1.2. Available at: https://assetstore.unity.com/packages/3d/vehicles/air/planes-choppers-polypack-194946 [Accessed 9 April 2024].
+8. Sound Earth Game Audio (2023) *Post Apocalypse Guns Demo*, v. 1.1.1. Available at: https://assetstore.unity.com/packages/audio/sound-fx/weapons/post-apocalypse-guns-demo-33515 [Accessed 11 April 2024].
+9. Muz Station Productions (2017) *FREE Energy Hard Rock Music Pack*, v. 1.2. Available at: https://assetstore.unity.com/packages/audio/music/rock/free-energy-hard-rock-music-pack-54012 [Accessed 11 April 2024].
