@@ -8,7 +8,6 @@ namespace Agents
 {
     public class SurvivorAI : IndividualAgent
     {
-        public Vector3 m_spawnTransform;
         public Transform m_safeZoneTransform;
         public GameObject m_rifle;
         private readonly float fireCooldown = 1.0f;
@@ -17,7 +16,6 @@ namespace Agents
 
         private void Start()
         {
-            m_spawnTransform = transform.position;
             agentType = AgentType.Survivor;
             m_navMeshAgent = GetComponent<NavMeshAgent>();
             InitializeBT();
