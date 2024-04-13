@@ -61,7 +61,7 @@ Recursively partition the islands.
 
 `private void SplitVertically(Island island)`
 
-Split an island horizontally/vertically. Initial split at the central line, and there's a *m_splitWiggle = 8*, which shifts the divider a bit.
+Split an island horizontally/vertically. Initial split at the central line, and there's a *m_splitWiggle = 12*, which shifts the divider a bit.
 
 #### 0.0.2 *class CellularAutomata*
 
