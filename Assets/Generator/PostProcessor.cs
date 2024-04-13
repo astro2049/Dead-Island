@@ -12,6 +12,30 @@ namespace Generator
             grid = pGrid;
         }
 
+        public void GenerateCoastlines(Island island)
+        {
+            Vector2Int topLeft = island.getTopLeft(), downRight = island.getDownRight();
+            int padding = island.getPadding();
+            for (int i = topLeft.x + padding; i < downRight.x - padding; i++) {
+                for (int j = topLeft.y + padding; j < downRight.y - padding; j++) {
+                    if (grid[i, j] != TileType.Forest) {
+                        continue;
+                    }
+                    Dictionary<TileType, List<int[]>> neighbors = Utils.GetMooreNeighbors(i, j, grid);
+                    if (neighbors[TileType.Ocean].Count != 0) {
+                        // if on coastline
+                        grid[i, j] = TileType.Beach;
+                        foreach (int[] coordinate in neighbors[TileType.Forest]) {
+                            if (Random.Range(0, 100) > 25) {
+                                continue;
+                            }
+                            grid[coordinate[0], coordinate[1]] = TileType.Beach;
+                        }
+                    }
+                }
+            }
+        }
+
         public void ConnectIslands(Island island)
         {
             if (island.getIsLeaf()) {
@@ -41,30 +65,6 @@ namespace Generator
             }
             ConnectIslands(island.getLeftIsland());
             ConnectIslands(island.getRightIsland());
-        }
-
-        public void GenerateCoastlines(Island island)
-        {
-            Vector2Int topLeft = island.getTopLeft(), downRight = island.getDownRight();
-            int padding = island.getPadding();
-            for (int i = topLeft.x + padding; i < downRight.x - padding; i++) {
-                for (int j = topLeft.y + padding; j < downRight.y - padding; j++) {
-                    if (grid[i, j] != TileType.Forest) {
-                        continue;
-                    }
-                    Dictionary<TileType, List<int[]>> neighbors = Utils.GetMooreNeighbors(i, j, grid);
-                    if (neighbors[TileType.Ocean].Count != 0) {
-                        // if on coastline
-                        grid[i, j] = TileType.Beach;
-                        foreach (int[] coordinate in neighbors[TileType.Forest]) {
-                            if (Random.Range(0, 100) > 25) {
-                                continue;
-                            }
-                            grid[coordinate[0], coordinate[1]] = TileType.Beach;
-                        }
-                    }
-                }
-            }
         }
     }
 }

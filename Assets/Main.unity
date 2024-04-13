@@ -1270,8 +1270,8 @@ MonoBehaviour:
   m_height: 64
   m_maxIslandWidth: 32
   m_maxIslandHeight: 32
-  m_splitWiggle: 8
-  m_islandPadding: 2
+  m_splitWiggle: 12
+  m_islandPadding: 1
   m_beachTilePrefab: {fileID: 1354899855328240576, guid: 37403a547866c714fabf8b3ec92b16d9, type: 3}
   m_forestTilePrefab: {fileID: 7130005556168028831, guid: 746870aee884b1c42937933256a3fa4d, type: 3}
   m_tilesGameObject: {fileID: 1078289693}
@@ -2835,8 +2835,8 @@ Transform:
   m_GameObject: {fileID: 1606513342}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -79, y: 0, z: 19.4}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: -77, y: 0, z: 20}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1581622600}

@@ -124,7 +124,10 @@ namespace Generator
         private void PlaceActors()
         {
             int distance = 10;
-            int safeZoneIsland = Random.Range(5, leafIslands.Count);
+            int safeZoneIsland = Random.Range(6, leafIslands.Count);
+            if (safeZoneIsland >= leafIslands.Count) {
+                safeZoneIsland = leafIslands.Count - 1;
+            }
             for (int i = 0; i < leafIslands.Count; i++) {
                 var island = leafIslands[i];
                 var center = island.getCenter();

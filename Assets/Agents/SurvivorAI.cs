@@ -45,11 +45,14 @@ namespace Agents
         private void TurnTowardsTarget()
         {
             m_navMeshAgent.ResetPath();
+            if (isFacingTarget) {
+                return;
+            }
             var targetDirection = m_target.transform.position - transform.position;
             float angle = Vector3.Angle(transform.forward, targetDirection);
             var targetRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * Time.deltaTime);
-            if (angle < 10) {
+            if (angle <= 10) {
                 isFacingTarget = true;
             }
         }
