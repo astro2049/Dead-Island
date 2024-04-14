@@ -147,7 +147,7 @@ namespace Generator
                         PlaceActor(m_survivorPrefab, m_survivorsGameObject, centerWorldCoord, distance);
                     }
                 } else if (i != safeZoneIsland) {
-                    int zombieCount = Random.Range(10, 20);
+                    int zombieCount = Random.Range(20, 30);
                     for (int j = 0; j < zombieCount; j++) {
                         PlaceActor(m_zombiePrefab, m_zombiesGameObject, centerWorldCoord, distance);
                     }

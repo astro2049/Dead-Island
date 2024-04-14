@@ -64,7 +64,7 @@ namespace Agents
 
         private void Chase()
         {
-            m_navMeshAgent.speed = 7;
+            m_navMeshAgent.speed = 8;
             m_actionText.text = "Chase";
             m_navMeshAgent.SetDestination(m_target.transform.position);
         }

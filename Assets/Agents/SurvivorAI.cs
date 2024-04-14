@@ -13,7 +13,7 @@ namespace Agents
 
         public Transform m_safeZoneTransform;
         public GameObject m_rifle;
-        private readonly float fireCooldown = 1.0f;
+        private readonly float fireCooldown = 1.2f;
         private float currentFireCooldown = 0.0f;
         private bool isFacingTarget = false;
 
@@ -59,10 +59,8 @@ namespace Agents
 
         private void NavigateToSafeZone()
         {
-            if (!m_navMeshAgent.hasPath) {
-                m_navMeshAgent.SetDestination(m_safeZoneTransform.position);
-                m_navMeshAgent.updateRotation = true;
-            }
+            m_navMeshAgent.SetDestination(m_safeZoneTransform.position);
+            m_navMeshAgent.updateRotation = true;
         }
 
         private void NavigateToStickWithLeader()
