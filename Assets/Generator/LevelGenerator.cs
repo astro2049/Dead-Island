@@ -15,6 +15,14 @@ namespace Generator
         Forest = 2
     }
 
+    public enum SquadSize
+    {
+        Solo = 1,
+        Pair = 2,
+        Trio = 3,
+        Squad = 4
+    }
+
     public class LevelGenerator : MonoBehaviour
     {
         private GameManager gameManager;
@@ -40,6 +48,7 @@ namespace Generator
         private NavMeshSurface m_navMeshSurface;
 
         public GameObject m_survivorsGameObject, m_zombiesGameObject;
+        public SquadSize m_squadSize;
         public GameObject m_survivorPrefab, m_zombiePrefab;
 
         public GameObject m_safeZonePrefab;
@@ -134,7 +143,9 @@ namespace Generator
                 var centerWorldCoord = GirdCoordToWorld(center.x, center.y);
                 Debug.DrawLine(new Vector3(0, 20, 0), new Vector3(centerWorldCoord.x, 0, centerWorldCoord.z), Color.green, 5);
                 if (i == 0) {
-                    PlaceActor(m_survivorPrefab, m_survivorsGameObject, centerWorldCoord, distance);
+                    for (int j = 0; j < m_squadSize.GetHashCode(); j++) {
+                        PlaceActor(m_survivorPrefab, m_survivorsGameObject, centerWorldCoord, distance);
+                    }
                 } else if (i != safeZoneIsland) {
                     int zombieCount = Random.Range(5, 10);
                     for (int j = 0; j < zombieCount; j++) {
@@ -159,6 +170,7 @@ namespace Generator
                 gameManager.m_survivors.Add(agent);
                 gameManager.m_survivorCount++;
                 gameManager.UpdateSurvivorCountText();
+                gameManager.squadAgent.AddSurvivor(agent);
             } else {
                 gameManager.m_zombies.Add(agent);
                 gameManager.m_zombieCount++;

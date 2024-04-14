@@ -1280,6 +1280,7 @@ MonoBehaviour:
   m_heightCenterOffset: 0
   m_survivorsGameObject: {fileID: 1482619393}
   m_zombiesGameObject: {fileID: 1012016659}
+  m_squadSize: 4
   m_survivorPrefab: {fileID: 8133291760530916415, guid: 974c36c39224c3e47a33a90c10812bd3, type: 3}
   m_zombiePrefab: {fileID: 905004437280009357, guid: d2d7a95a0b9647b44b6bebddb15522b3, type: 3}
   m_safeZonePrefab: {fileID: 8001615150575533420, guid: c5e72610812841b4db64d34f71b10082, type: 3}
@@ -3109,7 +3110,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x Survivor
+  m_text: x Survivors
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -5663,6 +5663,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_gameManager: {fileID: 0}
   lifeStatus: 0
+  m_squadAgent: {fileID: 0}
+  m_squadRole: 0
+  m_locationOffsetToLeader: {x: -5, y: 0, z: -5}
   m_safeZoneTransform: {fileID: 0}
   m_rifle: {fileID: 4061793534009978346}
 --- !u!195 &7800267294765764034

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject m_zombieCountText, m_survivorCountText;
     public GameObject m_roundOverText;
 
+    public SquadAgent squadAgent = new SquadAgent();
+
     public void ActivateActors()
     {
         m_startButton.GetComponent<Button>().interactable = false;
