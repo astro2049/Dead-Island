@@ -17,7 +17,7 @@ namespace Agents
         private float currentFireCooldown = 0.0f;
         private bool isFacingTarget = false;
 
-        private void Start()
+        private new void Start()
         {
             base.Start();
 

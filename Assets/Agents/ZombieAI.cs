@@ -12,7 +12,7 @@ namespace Agents
     {
         private TextMeshPro m_actionText;
 
-        private void Start()
+        private new void Start()
         {
             base.Start();
 
