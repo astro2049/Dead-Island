@@ -10,7 +10,6 @@ namespace Agents
         // Squad
         public SquadAgent m_squadAgent;
         public int m_squadMemberID = -1;
-        private SquadMember m_squadMember;
 
         public Transform m_safeZoneTransform;
         public GameObject m_rifle;
@@ -20,25 +19,12 @@ namespace Agents
 
         private void Start()
         {
+            base.Start();
+
             agentType = AgentType.Survivor;
             m_navMeshAgent = GetComponent<NavMeshAgent>();
 
             InitializeBT();
-        }
-
-        // Squad
-        public void JoinSquad(SquadAgent squadAgent, int squadMemberID)
-        {
-            m_squadAgent = squadAgent;
-            m_squadMemberID = squadMemberID;
-            m_squadMember = m_squadAgent.m_members[m_squadMemberID];
-        }
-
-        public void QuitSquad()
-        {
-            m_squadAgent = null;
-            m_squadMemberID = -1;
-            m_squadMember = null;
         }
 
         private GameObject GetLeader()
@@ -52,7 +38,7 @@ namespace Agents
                 new Selector(
                     new BlackboardCondition("hasATarget", Operator.IS_EQUAL, false, Stops.IMMEDIATE_RESTART,
                         new Selector(
-                            new Condition(() => m_squadMember.squadRole == SquadRole.Leader,
+                            new Condition(() => m_squadAgent.m_members[m_squadMemberID].squadRole == SquadRole.Leader,
                                 new Action(NavigateToSafeZone)),
                             new Action(NavigateToStickWithLeader)
                         )
@@ -81,7 +67,7 @@ namespace Agents
 
         private void NavigateToStickWithLeader()
         {
-            m_navMeshAgent.SetDestination(GetLeader().transform.TransformPoint(m_squadMember.positioningOffset));
+            m_navMeshAgent.SetDestination(GetLeader().transform.TransformPoint(m_squadAgent.m_members[m_squadMemberID].positioningOffset));
             m_navMeshAgent.updateRotation = true;
         }
 
@@ -113,6 +99,12 @@ namespace Agents
             m_rifle.GetComponent<ParticleSystem>().Play();
             currentFireCooldown = fireCooldown;
             m_target.GetComponent<IndividualAgent>().Die();
+            foreach (var squadMember in m_squadAgent.m_members) {
+                var survivor = squadMember.survivor;
+                if (survivor && survivor != transform.gameObject) {
+                    squadMember.survivor.GetComponent<SurvivorAI>().LoseTarget(m_target);
+                }
+            }
             RetargetClosestAgent();
         }
 
@@ -131,7 +123,15 @@ namespace Agents
 
         public override void Die()
         {
-            base.Die();
+            if (lifeStatus == LifeStatus.Dead) {
+                return;
+            }
+            lifeStatus = LifeStatus.Dead;
+            m_navMeshAgent.enabled = false;
+            transform.Rotate(new Vector3(0, 90, 0));
+            DeactivateBT();
+            m_gameManager.m_survivorCount--;
+            m_gameManager.UpdateSurvivorCountText();
             m_squadAgent.RemoveSurvivor(transform.gameObject);
         }
     }

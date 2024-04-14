@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using NPBehave;
 using UnityEngine.AI;
@@ -29,6 +30,14 @@ namespace Agents
         protected AgentType agentType;
         public LifeStatus lifeStatus = LifeStatus.Alive;
 
+        protected void Start()
+        {
+            Collider[] colliders = GetComponentsInChildren<Collider>();
+            foreach (var collider in colliders) {
+                collider.enabled = true;
+            }
+        }
+
         public void ActivateBT()
         {
             m_BT.Start();
@@ -37,7 +46,6 @@ namespace Agents
         public void DeactivateBT()
         {
             if (m_BT.CurrentState == Node.State.ACTIVE) {
-                lifeStatus = LifeStatus.Dead;
                 m_BT.Stop();
             }
         }
@@ -91,29 +99,22 @@ namespace Agents
         {
             m_targets[agent].Remove(perception);
             if (m_targets[agent].Count == 0) {
-                if (agent == m_target) {
-                    RetargetClosestAgent();
-                } else {
-                    m_targets.Remove(agent);
-                }
+                LoseTarget(agent);
             }
         }
 
-        public virtual void Die()
+        protected void LoseTarget(GameObject agent)
         {
-            if (lifeStatus == LifeStatus.Dead) {
+            if (!m_targets.ContainsKey(agent)) {
                 return;
             }
-            m_navMeshAgent.enabled = false;
-            transform.Rotate(new Vector3(0, 90, 0));
-            DeactivateBT();
-            if (agentType == AgentType.Zombie) {
-                m_gameManager.m_zombieCount--;
-                m_gameManager.UpdateZombieCountText();
+            if (agent == m_target) {
+                RetargetClosestAgent();
             } else {
-                m_gameManager.m_survivorCount--;
-                m_gameManager.UpdateSurvivorCountText();
+                m_targets.Remove(agent);
             }
         }
+
+        public virtual void Die() { }
     }
 }

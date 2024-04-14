@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NPBehave;
 using TMPro;
@@ -13,6 +14,8 @@ namespace Agents
 
         private void Start()
         {
+            base.Start();
+
             agentType = AgentType.Zombie;
             m_navMeshAgent = GetComponent<NavMeshAgent>();
             InitializeBT();
@@ -85,6 +88,34 @@ namespace Agents
                     m_BT.Blackboard["withinAttackRadius"] = true; // Attack range of 3m
                 }
             }
+        }
+
+        public override void Die()
+        {
+            if (lifeStatus == LifeStatus.Dead) {
+                return;
+            }
+            lifeStatus = LifeStatus.Dead;
+            m_navMeshAgent.enabled = false;
+            transform.Rotate(new Vector3(0, 90, 0));
+            DeactivateBT();
+            m_gameManager.m_zombieCount--;
+            m_gameManager.UpdateZombieCountText();
+            StartCoroutine(SinkUnderMap());
+        }
+
+        private IEnumerator SinkUnderMap()
+        {
+            float duration = 5.0f;
+            var startPosition = transform.position;
+            var endPosition = startPosition + new Vector3(0, -10, 0);
+            float elapsedTime = 0;
+            while (elapsedTime < duration) {
+                transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+            Destroy(gameObject);
         }
     }
 }
