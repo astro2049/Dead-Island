@@ -166,7 +166,7 @@ A *survivor*
 
 ### 2.1 The Squad
 
-![1](https://github.com/astro2049/Dead-Island/assets/45759373/02bf94ae-14c8-4ba4-a720-94b5c22409e9)
+![1](https://github.com/astro2049/Dead-Island/assets/45759373/927ef135-6a7c-4d2b-bcad-6f80cf7e72c9)
 
 **Squad Overview**
 
