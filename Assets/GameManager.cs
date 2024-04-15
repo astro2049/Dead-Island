@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject m_startButton;
+    public GameObject m_toggleSoundButtonText;
 
     public List<GameObject> m_survivors = new List<GameObject>();
     public List<GameObject> m_zombies = new List<GameObject>();
@@ -47,5 +48,11 @@ public class GameManager : MonoBehaviour
     public void ReloadCurrentScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void toggleAudio()
+    {
+        AudioListener.volume = 1 - AudioListener.volume;
+        m_toggleSoundButtonText.GetComponent<TextMeshProUGUI>().text = "Sound: " + (AudioListener.volume == 1 ? "On" : "Off");
     }
 }
