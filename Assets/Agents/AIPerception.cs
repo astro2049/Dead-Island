@@ -19,16 +19,16 @@ namespace Agents
 
         private void OnTriggerEnter(Collider other)
         {
-            var otherGameObject = other.transform.parent.gameObject;
-            if (!otherGameObject.CompareTag(transform.tag) && otherGameObject.GetComponent<IndividualAgent>().lifeStatus == LifeStatus.Alive) {
+            var otherGameObject = other.transform.parent.transform.parent.gameObject;
+            if (otherGameObject.GetComponent<IndividualAgent>().lifeStatus == LifeStatus.Alive) {
                 m_individualAI.SenseIndividualAgent(otherGameObject, m_perception);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            var otherGameObject = other.transform.parent.gameObject;
-            if (!otherGameObject.CompareTag(transform.tag) && otherGameObject.GetComponent<IndividualAgent>().lifeStatus == LifeStatus.Alive) {
+            var otherGameObject = other.transform.parent.transform.parent.gameObject;
+            if (otherGameObject.GetComponent<IndividualAgent>().lifeStatus == LifeStatus.Alive) {
                 m_individualAI.LosePerceptionOnIndividualAgent(otherGameObject, m_perception);
             }
         }

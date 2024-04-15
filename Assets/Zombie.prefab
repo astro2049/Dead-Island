@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8810254330231085698}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Zombie
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,9 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1024522063202304243}
-  - {fileID: 7359259830415576580}
-  - {fileID: 2070566072612103687}
+  - {fileID: 4001721895269478786}
   - {fileID: 6664723831638707866}
   - {fileID: 1563688017315992827}
   m_Father: {fileID: 0}
@@ -106,7 +104,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7872496006695232811}
+  m_Father: {fileID: 4001721895269478786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &519300549841656764
 MeshFilter:
@@ -192,8 +190,8 @@ GameObject:
   - component: {fileID: 7337851728621630229}
   - component: {fileID: 1155002986047201925}
   - component: {fileID: 6844552243779507943}
-  m_Layer: 0
-  m_Name: Body
+  m_Layer: 6
+  m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +210,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 7872496006695232811}
+  m_Father: {fileID: 4001721895269478786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &568194261114554493
 MeshFilter:
@@ -325,9 +323,9 @@ GameObject:
   - component: {fileID: 6705172302695429036}
   - component: {fileID: 6003589414604656117}
   - component: {fileID: 8694109181649325077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual
-  m_TagString: Zombie
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -617,7 +615,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7872496006695232811}
+  m_Father: {fileID: 4001721895269478786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6123968622752855818
 MeshFilter:
@@ -701,9 +699,9 @@ GameObject:
   - component: {fileID: 7011102439872976313}
   - component: {fileID: 3794743522452485260}
   - component: {fileID: 2873862492015747317}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Aural
-  m_TagString: Zombie
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -757,3 +755,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_perception: 1
+--- !u!1 &8025590556558787594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4001721895269478786}
+  m_Layer: 0
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4001721895269478786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8025590556558787594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1024522063202304243}
+  - {fileID: 7359259830415576580}
+  - {fileID: 2070566072612103687}
+  m_Father: {fileID: 7872496006695232811}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

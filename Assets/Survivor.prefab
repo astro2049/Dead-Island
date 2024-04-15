@@ -29,10 +29,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.098231144, y: -0.18025386, z: -0.09171165, w: 0.97439635}
   m_LocalPosition: {x: 0.615, y: 1.077, z: 0.751}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.19999999, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5048153743444220350}
+  m_Father: {fileID: 4784589920771568836}
   m_LocalEulerAnglesHint: {x: -12.973, y: -19.998, z: -8.457}
 --- !u!33 &2578331001094211249
 MeshFilter:
@@ -105,6 +105,40 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2630327969376731024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4784589920771568836}
+  m_Layer: 0
+  m_Name: Body
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4784589920771568836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2630327969376731024}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3835370271725344513}
+  - {fileID: 65417883163584641}
+  - {fileID: 8851994998478370728}
+  m_Father: {fileID: 5048153743444220350}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3264512379853321124
 GameObject:
   m_ObjectHideFlags: 0
@@ -5210,9 +5244,9 @@ GameObject:
   - component: {fileID: 6970210571884478255}
   - component: {fileID: 8376818582172093448}
   - component: {fileID: 8902545901452712909}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Aural
-  m_TagString: Survivor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5265,7 +5299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7e917617b04970be4c24ceb8efa177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_perception: 1
+  m_perception: 0
 --- !u!1 &5332119149076447471
 GameObject:
   m_ObjectHideFlags: 0
@@ -5279,8 +5313,8 @@ GameObject:
   - component: {fileID: 3920018491494267425}
   - component: {fileID: 7538524170135234073}
   - component: {fileID: 3052470235381173771}
-  m_Layer: 0
-  m_Name: Body
+  m_Layer: 7
+  m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5299,7 +5333,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 5048153743444220350}
+  m_Father: {fileID: 4784589920771568836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7300875921144470090
 MeshFilter:
@@ -5430,10 +5464,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.12652579, y: 0.18685979, z: -0.0286531, w: 0.9737832}
   m_LocalPosition: {x: -0.282, y: 1.077, z: 1.044}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1.1387}
+  m_LocalScale: {x: 0.20000002, y: 0.20000002, z: 1.1386999}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5048153743444220350}
+  m_Father: {fileID: 4784589920771568836}
   m_LocalEulerAnglesHint: {x: -13.633, y: 22.454, z: -6.089}
 --- !u!33 &7145351887137302869
 MeshFilter:
@@ -5624,7 +5658,7 @@ GameObject:
   - component: {fileID: 7800267294765764034}
   m_Layer: 0
   m_Name: Survivor
-  m_TagString: Survivor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5642,10 +5676,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3835370271725344513}
-  - {fileID: 65417883163584641}
+  - {fileID: 4784589920771568836}
   - {fileID: 8078885380148362439}
-  - {fileID: 8851994998478370728}
   - {fileID: 8809307265270096921}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5699,9 +5731,9 @@ GameObject:
   - component: {fileID: 4305256120023268643}
   - component: {fileID: 3014919064850836142}
   - component: {fileID: 3440744133147370366}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visual
-  m_TagString: Survivor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
