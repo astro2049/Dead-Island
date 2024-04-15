@@ -115,6 +115,20 @@ namespace Agents
             }
         }
 
-        public virtual void Die() { }
+        public void Die()
+        {
+            if (lifeStatus == LifeStatus.Dead) {
+                return;
+            }
+            PerformDie();
+        }
+
+        protected virtual void PerformDie()
+        {
+            lifeStatus = LifeStatus.Dead;
+            m_navMeshAgent.enabled = false;
+            DeactivateBT();
+            transform.Rotate(new Vector3(0, 90, 0));
+        }
     }
 }

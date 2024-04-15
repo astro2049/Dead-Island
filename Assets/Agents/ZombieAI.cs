@@ -90,15 +90,9 @@ namespace Agents
             }
         }
 
-        public override void Die()
+        protected override void PerformDie()
         {
-            if (lifeStatus == LifeStatus.Dead) {
-                return;
-            }
-            lifeStatus = LifeStatus.Dead;
-            m_navMeshAgent.enabled = false;
-            transform.Rotate(new Vector3(0, 90, 0));
-            DeactivateBT();
+            base.PerformDie();
             m_gameManager.m_zombieCount--;
             m_gameManager.UpdateZombieCountText();
             StartCoroutine(SinkUnderMap());
