@@ -195,13 +195,13 @@ When a squad member kills a *zombie*, it is notified across the squad, other squ
 
 **Cellular Automata**
 
-1. White Box Dev (2020) 'Cellular Automata | Procedural Generation | Game Development Tutorial', *YouTube*, 19 Sept. Available at: https://www.youtube.com/watch?v=slTEz6555Ts (Accessed 27 Mar 2024).
+1. White Box Dev (2020) 'Cellular Automata | Procedural Generation | Game Development Tutorial', *YouTube*, 19 September. Available at: https://www.youtube.com/watch?v=slTEz6555Ts (Accessed 27 March 2024).
 
 **Binary Space Trees/Partitioning**
 
 2. 'Basic BSP Dungeon generation' (2023) *RogueBasin*. Available at: https://www.roguebasin.com/index.php/Basic_BSP_Dungeon_generation (Accessed 31 March 2024).
 
-3. Sunny Valley Studio (2020) 'Binary Space Partitioning Algorithm - P13 - Unity Procedural Generation of a 2D Dungeon', *YouTube*, 19 Dec. Available at: https://www.youtube.com/watch?v=nbi88hY9hcw (Accessed 31 March 2024).
+3. Sunny Valley Studio (2020) 'Binary Space Partitioning Algorithm - P13 - Unity Procedural Generation of a 2D Dungeon', *YouTube*, 19 December. Available at: https://www.youtube.com/watch?v=nbi88hY9hcw (Accessed 31 March 2024).
 
 4. Uribe, G. (2019) 'Dungeon Generation using Binary Space Trees', *Medium*, 2 June. Available at: https://medium.com/@guribemontero/dungeon-generation-using-binary-space-trees-47d4a668e2d0 (Accessed 31 March 2024).
 
@@ -221,4 +221,4 @@ When a squad member kills a *zombie*, it is notified across the squad, other squ
 
 **Squad Coordination**
 
-10. Karlsson, T. (2022) 'Squad Coordination in "Days Gone"', *YouTube*, 7 Feb. Available at: https://www.youtube.com/watch?v=7TQ-WS3MPlE (Accessed: 20 March 2024).
+10. Karlsson, T. (2022) 'Squad Coordination in "Days Gone"', *YouTube*, 7 February. Available at: https://www.youtube.com/watch?v=7TQ-WS3MPlE (Accessed: 20 March 2024).
