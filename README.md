@@ -150,7 +150,7 @@ A *zombie*
 - When sees a survivor, chases at 8m/s.
   - If the survivor is within attack range = 3m, attacks.
 
-![2](https://github.com/astro2049/Dead-Island/assets/45759373/ecebeaa0-be00-4444-95e0-51182587ca27)
+![2](https://github.com/astro2049/Dead-Island/assets/45759373/38b15b33-b3a2-46d8-838c-a610fb7ff796)
 
 **Survivor, `class SurvivorAI : IndividualAgent`**
 
@@ -166,7 +166,7 @@ A *survivor*
 
 ### 2.1 The Squad
 
-![1](https://github.com/astro2049/Dead-Island/assets/45759373/927ef135-6a7c-4d2b-bcad-6f80cf7e72c9)
+![1](https://github.com/astro2049/Dead-Island/assets/45759373/7d41d1fa-1508-462f-b859-3f04b6e08690)
 
 **Squad Overview**
 
